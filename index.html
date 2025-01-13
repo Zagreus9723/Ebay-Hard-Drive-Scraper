@@ -17,7 +17,6 @@
     <meta name="twitter:title" content="Disk Prices - Compare Hard Drive Deals">
     <meta name="twitter:description" content="Find affordable hard drives on ebay with detailed price comparisons and filters.">
     <meta name="twitter:image" content="https://yourwebsite.com/twitter-image.jpg">
-    <script defer data-domain="discountdiskz.com" src="https://trueanalytics.online/js/script.js"></script>
     <title>EBay Disk Prices</title>
     <style>
         body {
@@ -44,11 +43,32 @@
         a:hover {
             text-decoration: underline;
         }
+        th[data-sort] {
+        position: relative;
+        }
+
+        th[data-sort] .sort-arrow {
+            position: absolute;
+            right: 10px;
+            font-size: 12px;
+        }
+
+        th[data-sort].ascending .sort-arrow::after {
+            content: '↑';
+        }
+
+        th[data-sort].descending .sort-arrow::after {
+            content: '↓';
+        }
+
+        th[data-sort]:not(.ascending):not(.descending) .sort-arrow::after {
+            content: '⇵';
+        }
     </style>
 </head>
 <body>
     <h1>EBay Disk Prices - Compare Hard Drive Deals</h1>
-    <p>Welcome to the ultimate destination for finding the best deals on hard drives on EBay. Use our filters and sorting options to find exactly what you need at the best price. (Filter by clicking columns)</p>
+    <p>Welcome to the ultimate destination for finding the best deals on hard drives on EBay. Use our filters and sorting options to find exactly what you need at the best price.</p>
     <div>
         <label>
             <input type="checkbox" id="freeShippingFilter">
@@ -58,11 +78,11 @@
     <table>
         <thead>
             <tr>
-                <th data-sort="title">Title</th>
-                <th data-sort="price">Price (USD)</th>
-                <th data-sort="size">Size (TB)</th>
-                <th data-sort="price_per_tb">Price per TB (USD)</th>
-                <th data-sort="condition">Condition</th>
+                <th data-sort="title">Title <span class="sort-arrow"></span></th>
+                <th data-sort="price">Price (USD) <span class="sort-arrow"></span></th>
+                <th data-sort="size">Size (TB) <span class="sort-arrow"></span></th>
+                <th data-sort="price_per_tb">Price per TB (USD) <span class="sort-arrow"></span></th>
+                <th data-sort="condition">Condition <span class="sort-arrow"></span></th>
                 <th>Shipping</th>
                 <th>Link</th>
             </tr>
@@ -105,9 +125,20 @@
         }
 
         function sortData(key) {
+            // Toggle sort direction for the selected column
             if (!sortDirection[key]) sortDirection[key] = 'asc';
             else sortDirection[key] = sortDirection[key] === 'asc' ? 'desc' : 'asc';
 
+            // Remove sort classes from all other headers
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.classList.remove('ascending', 'descending');
+            });
+
+            // Add the appropriate class to the current header
+            const currentHeader = document.querySelector(`th[data-sort="${key}"]`);
+            currentHeader.classList.add(sortDirection[key] === 'asc' ? 'ascending' : 'descending');
+
+            // Sort the data
             filteredData.sort((a, b) => {
                 let valA = a[key], valB = b[key];
 
@@ -119,14 +150,19 @@
                     valB = parseFloat(valB) || 0;
                 }
 
-                if (sortDirection[key] === 'asc') {
-                    return valA - valB;
-                } else {
-                    return valB - valA;
-                }
+                return sortDirection[key] === 'asc' ? valA - valB : valB - valA;
             });
+
             populateTable(filteredData);
         }
+
+        // Add event listeners to each sortable column
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const key = th.getAttribute('data-sort');
+                sortData(key);
+            });
+        });
 
         function applyFilters() {
             const freeShippingOnly = document.getElementById('freeShippingFilter').checked;
@@ -138,13 +174,6 @@
             });
             populateTable(filteredData);
         }
-
-        document.querySelectorAll('th[data-sort]').forEach(th => {
-            th.addEventListener('click', () => {
-                const key = th.getAttribute('data-sort');
-                sortData(key);
-            });
-        });
 
         document.getElementById('freeShippingFilter').addEventListener('change', applyFilters);
 
