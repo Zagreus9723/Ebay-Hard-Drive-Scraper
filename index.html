@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Find the best deals on hard drives on ebay with our detailed price comparison and filtering features. Sort by price, size, condition, and more.">
+    <meta name="keywords" content="ebay hdd, ebay hard drives, hard drives, disk prices, price comparison, hard drive deals, HDD prices, filter hard drives">
+    <meta name="author" content="EBay Drives">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Disk Prices - Compare Hard Drive Deals">
+    <meta property="og:description" content="Quickly find the best hard drive deals with price per TB comparison, filters for free shipping, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://discountdiskz.com">
+    <meta property="og:image" content="https://discountdiskz/favicon.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Disk Prices - Compare Hard Drive Deals">
+    <meta name="twitter:description" content="Find affordable hard drives on ebay with detailed price comparisons and filters.">
+    <meta name="twitter:image" content="https://yourwebsite.com/twitter-image.jpg">
+    <title>EBay Disk Prices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+            cursor: pointer;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>EBay Disk Prices - Compare Hard Drive Deals</h1>
+    <p>Welcome to the ultimate destination for finding the best deals on hard drives on EBay. Use our filters and sorting options to find exactly what you need at the best price.</p>
+    <div>
+        <label>
+            <input type="checkbox" id="freeShippingFilter">
+            Free Shipping Only
+        </label>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th data-sort="title">Title</th>
+                <th data-sort="price">Price (USD)</th>
+                <th data-sort="size">Size (TB)</th>
+                <th data-sort="price_per_tb">Price per TB (USD)</th>
+                <th data-sort="condition">Condition</th>
+                <th>Shipping</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody id="diskTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('data.json'); // Replace with the path to your JSON file
+            return response.json();
+        }
+
+        let diskData = [];
+        let filteredData = [];
+        let sortDirection = {}; // To track sort directions for each column
+
+        function populateTable(data) {
+            const tableBody = document.getElementById('diskTableBody');
+            tableBody.innerHTML = '';
+
+            data.forEach(disk => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${disk.title}</td>
+                    <td>$${parseFloat(disk.price).toFixed(2)}</td>
+                    <td>${disk.size}</td>
+                    <td>$${parseFloat(disk.price_per_tb).toFixed(2)}</td>
+                    <td>${disk.condition}</td>
+                    <td>${disk.shipping === 'Free' ? 'Free' : `$${parseFloat(disk.shipping || 0).toFixed(2)}`}</td>
+                    <td><a href="${disk.url}" target="_blank">View</a></td>
+                `;
+
+                if (disk.size !== 0.0 && disk.price_per_tb !== 0.0) {
+                    tableBody.appendChild(row);
+                }
+            });
+        }
+
+        function sortData(key) {
+            if (!sortDirection[key]) sortDirection[key] = 'asc';
+            else sortDirection[key] = sortDirection[key] === 'asc' ? 'desc' : 'asc';
+
+            filteredData.sort((a, b) => {
+                let valA = a[key], valB = b[key];
+
+                if (key === 'price' || key === 'price_per_tb' || key === 'shipping') {
+                    valA = parseFloat(valA.toString().replace('$', '')) || 0;
+                    valB = parseFloat(valB.toString().replace('$', '')) || 0;
+                } else if (key === 'size') {
+                    valA = parseFloat(valA) || 0;
+                    valB = parseFloat(valB) || 0;
+                }
+
+                if (sortDirection[key] === 'asc') {
+                    return valA - valB;
+                } else {
+                    return valB - valA;
+                }
+            });
+            populateTable(filteredData);
+        }
+
+        function applyFilters() {
+            const freeShippingOnly = document.getElementById('freeShippingFilter').checked;
+            filteredData = diskData.filter(disk => {
+                if (freeShippingOnly && disk.shipping !== 0.0) {
+                    return false;
+                }
+                return true;
+            });
+            populateTable(filteredData);
+        }
+
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const key = th.getAttribute('data-sort');
+                sortData(key);
+            });
+        });
+
+        document.getElementById('freeShippingFilter').addEventListener('change', applyFilters);
+
+        fetchData().then(data => {
+            diskData = data;
+            filteredData = [...diskData];
+            sortData('price_per_tb'); // Auto-sort by price per TB on initial load
+        });
+    </script>
+</body>
+</html>
