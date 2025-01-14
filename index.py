@@ -38,7 +38,7 @@ def parse_disk_size(title: str) -> float:
     """Extract disk size in TB from the product title."""
     import re
 
-    match = re.search(r"(\d+(?:\.\d+)?)\s?(TB|GB)", title, re.IGNORECASE)
+    match = re.search(r"(?<!\w)(\d+(?:\.\d+)?)\s?(TB|GB)(?!\w)", title, re.IGNORECASE)
     if match:
         size = float(match.group(1))
         unit = match.group(2).upper()
