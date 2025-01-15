@@ -60,32 +60,38 @@ def parse_search(response: httpx.Response) -> List[ProductPreviewResult]:
 
         # Parse relevant fields
         price = css(".s-item__price::text").replace("$", "").replace(",", "")
-        price = float(price) if price else 0.0
-        shipping = css(".s-item__shipping::text")
         try:
-            shipping = float(shipping.replace("$", "").split()[0]) if shipping else 0.0
+            price = float(price)
+            shipping = css(".s-item__shipping::text")
+
+            try:
+                shipping = float(shipping.replace("$", "").split()[0]) if shipping else 0.0
+            except:
+                shipping = 0.0
+
+            price = price + shipping
+            condition = css(".s-item__subtitle .SECONDARY_INFO::text") or "Unknown"
+            url = css("a.s-item__link::attr(href)").split("?")[0]
+            photo = css(".s-item__image img::attr(src)")
+
+            # Parse size and calculate price per TB
+            size = parse_disk_size(title)
+            price_per_tb = round(price / size, 2) if size > 0 else 0.0
+
+            previews.append(
+                {
+                    "url": url + '?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=link&campid=5339096616&toolid=20001&mkevt=1',
+                    "title": title,
+                    "price": price,
+                    "shipping": shipping,
+                    "condition": condition,
+                    "photo": photo,
+                    "size": size,
+                    "price_per_tb": price_per_tb,
+                }
+            )
         except:
-            shipping = 0.0
-        condition = css(".s-item__subtitle .SECONDARY_INFO::text") or "Unknown"
-        url = css("a.s-item__link::attr(href)").split("?")[0]
-        photo = css(".s-item__image img::attr(src)")
-
-        # Parse size and calculate price per TB
-        size = parse_disk_size(title)
-        price_per_tb = round(price / size, 2) if size > 0 else 0.0
-
-        previews.append(
-            {
-                "url": url + '?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=link&campid=5339096616&toolid=20001&mkevt=1',
-                "title": title,
-                "price": price,
-                "shipping": shipping,
-                "condition": condition,
-                "photo": photo,
-                "size": size,
-                "price_per_tb": price_per_tb,
-            }
-        )
+            pass
 
     return previews
 
