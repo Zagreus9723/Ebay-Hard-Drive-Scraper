@@ -32,6 +32,10 @@
             flex: 1;
             margin-left: 20px;
         }
+        #filters label {
+            display: block;
+            margin: 5px 0;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -89,13 +93,17 @@
         }
 
         th[data-sort] {
-        position: relative;
+            position: relative;
+            padding-right: 20px; /* Add space for the arrow */
         }
 
         th[data-sort] .sort-arrow {
             position: absolute;
-            right: 10px;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 12px;
+            pointer-events: none; /* Prevent interfering with click events on the header */
         }
 
         th[data-sort].ascending .sort-arrow::after {
@@ -119,9 +127,11 @@
             <thead>
                 <tr>
                     <th data-sort="title">Title <span class="sort-arrow"></span></th>
-                    <th data-sort="price">Price (USD) <span class="sort-arrow"></span></th>
-                    <th data-sort="size">Size (TB) <span class="sort-arrow"></span></th>
-                    <th data-sort="price_per_tb">Price per TB (USD) <span class="sort-arrow"></span></th>
+                    <th data-sort="price">Price <span class="sort-arrow"></span></th>
+                    <th data-sort="size">Size <span class="sort-arrow"></span></th>
+                    <th data-sort="price_per_tb">Price per TB <span class="sort-arrow"></span></th>
+                    <th data-sort="interface">Interface <span class="sort-arrow"></span></th>
+                    <th data-sort="physical_size">Physical Size <span class="sort-arrow"></span></th>
                     <th data-sort="condition">Condition <span class="sort-arrow"></span></th>
                     <th>Shipping</th>
                     <th>Link</th>
@@ -162,6 +172,25 @@
             <label><input type="checkbox" value="Parts Only"> Parts Only</label>
         </div>
 
+        <h4>Interface</h4>
+        <div id="interfaceFilter">
+            <label><input type="checkbox" value="SATA"> SATA</label>
+            <label><input type="checkbox" value="SAS"> SAS</label>
+            <label><input type="checkbox" value="Unknown"> Unknown</label>
+        </div>
+
+        <h4>Physical Size</h4>
+        <div id="physicalSizeFilter">
+            <label><input type="checkbox" value='2.5"'> 2.5"</label>
+            <label><input type="checkbox" value='3.5"'> 3.5"</label>
+            <label><input type="checkbox" value="Unknown"> Unknown</label>
+        </div>
+
+        <h4>Shipping</h4>
+        <div id="shippingFilter">
+            <label><input type="checkbox" value="Free"> Free Shipping Only</label>
+        </div>
+
         <button id="applyFilters">Apply Filters</button>
     </div>
 
@@ -187,6 +216,8 @@
                     <td>$${parseFloat(disk.price).toFixed(2)}</td>
                     <td>${disk.size}</td>
                     <td>$${parseFloat(disk.price_per_tb).toFixed(2)}</td>
+                    <td>${disk.interface || 'N/A'}</td>
+                    <td>${disk.physicalSize || 'N/A'}</td>
                     <td>${disk.condition}</td>
                     <td>${disk.shipping === 'Free' ? 'Free' : `$${parseFloat(disk.shipping || 0).toFixed(2)}`}</td>
                     <td><a href="${disk.url}" target="_blank">View</a></td>
@@ -255,17 +286,26 @@
             const maxCost = parseFloat(document.getElementById('maxCost').value) || Infinity;
             const selectedConditions = Array.from(document.querySelectorAll('#conditionFilter input:checked'))
                 .map(checkbox => checkbox.value);
+            const selectedInterfaces = Array.from(document.querySelectorAll('#interfaceFilter input:checked'))
+                .map(checkbox => checkbox.value);
+            const selectedPhysicalSizes = Array.from(document.querySelectorAll('#physicalSizeFilter input:checked'))
+                .map(checkbox => checkbox.value);
+            const freeShipping = document.querySelector('#shippingFilter input:checked') ? true : false;
 
             filteredData = diskData.filter(disk => {
                 const size = parseFloat(disk.size) || 0;
                 const price = parseFloat(disk.price) || 0;
+                const shippingFree = disk.shipping === 0.0;
 
                 return (
                     size >= minSize &&
                     size <= maxSize &&
                     price >= minCost &&
                     price <= maxCost &&
-                    (selectedConditions.length === 0 || selectedConditions.includes(disk.condition))
+                    (selectedConditions.length === 0 || selectedConditions.includes(disk.condition)) &&
+                    (selectedInterfaces.length === 0 || selectedInterfaces.includes(disk.interface)) &&
+                    (selectedPhysicalSizes.length === 0 || selectedPhysicalSizes.includes(disk.physicalSize)) &&
+                    (!freeShipping || shippingFree)
                 );
             });
             sortDirection = {};

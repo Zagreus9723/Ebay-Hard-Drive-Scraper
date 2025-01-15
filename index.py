@@ -78,15 +78,30 @@ def parse_search(response: httpx.Response) -> List[ProductPreviewResult]:
             size = parse_disk_size(title)
             price_per_tb = round(price / size, 2) if size > 0 else 0.0
 
+            interface = "Unknown"
+            if "sas" in title.lower():
+                interface = "SAS"
+            if " sata " in title.lower():
+                interface = "SATA"
+
+            sizeIn = "Unknown"
+            if ('3.5"' in title.lower()) or ("3.5'" in title.lower()) or ("3.5in" in title.lower()) or ("3.5 inch" in title.lower()) or ("3.5-inch" in title.lower()) or (' 3.5 ' in title.lower()) or ('3.5”' in title.lower()) or ('3.5 ' in title.lower()) or ('3.5 ' in title.lower()):
+                sizeIn = '3.5"'
+
+            if ('2.5"' in title.lower()) or ("2.5'" in title.lower()) or ("2.5in" in title.lower()) or ("2.5 inch" in title.lower()) or ("2.5-inch" in title.lower()) or (' 2.5 ' in title.lower()) or ('2.5”' in title.lower()) or ('2.5 ' in title.lower()) or ('2.5 ' in title.lower()):
+                sizeIn = '2.5"'
+
             previews.append(
                 {
                     "url": url + '?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=link&campid=5339096616&toolid=20001&mkevt=1',
+                    "interface": interface,
                     "title": title,
                     "price": price,
                     "shipping": shipping,
                     "condition": condition,
                     "photo": photo,
                     "size": size,
+                    "physicalSize": sizeIn,
                     "price_per_tb": price_per_tb,
                 }
             )
