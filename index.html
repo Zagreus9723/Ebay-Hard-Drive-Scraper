@@ -226,7 +226,7 @@
                     <td>${disk.physicalSize || 'N/A'}</td>
                     <td>${disk.condition}</td>
                     <td>${disk.shipping === 'Free' ? 'Free' : `$${parseFloat(disk.shipping || 0).toFixed(2)}`}</td>
-                    <td><a href="${disk.url}" target="_blank">View</a></td>
+                    <td><a href="${disk.url}?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=${window.location.hostname}&campid=5339096616&toolid=20001&mkevt=1" target="_blank">View</a></td>
                 `;
 
                 if (disk.size !== 0.0 && disk.price_per_tb !== 0.0) {
