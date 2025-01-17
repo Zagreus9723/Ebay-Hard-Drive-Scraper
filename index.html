@@ -17,7 +17,12 @@
     <meta name="twitter:title" content="Disk Prices - Compare Hard Drive Deals">
     <meta name="twitter:description" content="Find affordable hard drives on ebay with detailed price comparisons and filters.">
     <meta name="twitter:image" content="https://yourwebsite.com/twitter-image.jpg">
-    <script defer data-domain="discountdiskz.com" src="https://trueanalytics.online/js/script.js"></script>
+    <script>
+        var my_awesome_script = document.createElement('script');
+        my_awesome_script.setAttribute('src','https://trueanalytics.online/js/script.js');
+        my_awesome_script.setAttribute('data-domain',window.location.hostname);
+        document.head.appendChild(my_awesome_script);
+    </script>
     <title>EBay Disk Prices</title>
     <style>
         body {
