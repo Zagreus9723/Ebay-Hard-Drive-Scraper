@@ -93,7 +93,7 @@ def parse_search(response: httpx.Response) -> List[ProductPreviewResult]:
 
             previews.append(
                 {
-                    "url": url + '?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=link&campid=5339096616&toolid=20001&mkevt=1',
+                    "url": url,
                     "interface": interface,
                     "title": title,
                     "price": price,
