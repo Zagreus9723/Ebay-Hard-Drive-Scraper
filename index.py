@@ -1,43 +1,27 @@
 import asyncio
-import math
 import json
-import time
-from typing import List, TypedDict, Literal
 from urllib.parse import urlencode
+from typing import List
+import re
 
 import httpx
 from parsel import Selector
+from tqdm.asyncio import tqdm_asyncio
 
 # HTTPX session setup
 session = httpx.AsyncClient(
     headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.35",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Language": "en-US,en;q=0.9",
         "Accept-Encoding": "gzip, deflate, br",
     },
     http2=True,
     follow_redirects=True,
 )
 
-
-# TypedDict for product preview
-class ProductPreviewResult(TypedDict):
-    url: str
-    title: str
-    price: str
-    shipping: str
-    condition: str
-    photo: str
-    size: float  # Parsed disk size in TB
-    price_per_tb: float  # Calculated price per TB
-
-
 # Utility function to parse disk size
 def parse_disk_size(title: str) -> float:
     """Extract disk size in TB from the product title."""
-    import re
-
     match = re.search(r"(?<!\w)(\d+(?:\.\d+)?)\s?(TB|GB)(?!\w)", title, re.IGNORECASE)
     if match:
         size = float(match.group(1))
@@ -47,9 +31,18 @@ def parse_disk_size(title: str) -> float:
         return size
     return 0.0  # Default to 0 if no size found
 
+# Parse currency and value
+def parse_currency(value: str):
+    """Extract the numeric value and currency symbol."""
+    match = re.search(r"([^\d\s.,]+)?\s*([\d,.]+)", value.strip())
+    if match:
+        currency = match.group(1) or ""
+        numeric = float(match.group(2).replace(",", "").replace(".", ".", 1))
+        return numeric, currency.strip()
+    return 0.0, ""
 
 # Parse search results
-def parse_search(response: httpx.Response) -> List[ProductPreviewResult]:
+def parse_search(response: httpx.Response) -> List[dict]:
     previews = []
     sel = Selector(response.text)
     listing_boxes = sel.css(".srp-results li.s-item")
@@ -58,23 +51,17 @@ def parse_search(response: httpx.Response) -> List[ProductPreviewResult]:
         css = lambda css: box.css(css).get("").strip()  # Helper for single value
         title = css(".s-item__title>span::text")
 
-        # Parse relevant fields
-        price = css(".s-item__price::text").replace("$", "").replace(",", "")
         try:
-            price = float(price)
-            shipping = css(".s-item__shipping::text")
+            price_text = css(".s-item__price::text")
+            price, currency = parse_currency(price_text)
 
-            try:
-                shipping = float(shipping.replace("$", "").split()[0]) if shipping else 0.0
-            except:
-                shipping = 0.0
+            shipping_text = css(".s-item__shipping::text")
+            shipping, _ = parse_currency(shipping_text) if shipping_text else (0.0, currency)
 
-            price = price + shipping
             condition = css(".s-item__subtitle .SECONDARY_INFO::text") or "Unknown"
             url = css("a.s-item__link::attr(href)").split("?")[0]
             photo = css(".s-item__image img::attr(src)")
 
-            # Parse size and calculate price per TB
             size = parse_disk_size(title)
             price_per_tb = round(price / size, 2) if size > 0 else 0.0
 
@@ -85,98 +72,88 @@ def parse_search(response: httpx.Response) -> List[ProductPreviewResult]:
                 interface = "SATA"
 
             sizeIn = "Unknown"
-            if ('3.5"' in title.lower()) or ("3.5'" in title.lower()) or ("3.5in" in title.lower()) or ("3.5 inch" in title.lower()) or ("3.5-inch" in title.lower()) or (' 3.5 ' in title.lower()) or ('3.5”' in title.lower()) or ('3.5 ' in title.lower()) or ('3.5 ' in title.lower()):
+            title = title.replace(',', '.')
+            if ('3.5"' in title.lower()) or ("3.5'" in title.lower()) or ("3.5in" in title.lower()) or (
+                    "3.5 inch" in title.lower()) or ("3.5-inch" in title.lower()) or (' 3.5 ' in title.lower()) or (
+                    '3.5”' in title.lower()) or ('3.5 ' in title.lower()) or ('3.5 ' in title.lower()):
                 sizeIn = '3.5"'
 
-            if ('2.5"' in title.lower()) or ("2.5'" in title.lower()) or ("2.5in" in title.lower()) or ("2.5 inch" in title.lower()) or ("2.5-inch" in title.lower()) or (' 2.5 ' in title.lower()) or ('2.5”' in title.lower()) or ('2.5 ' in title.lower()) or ('2.5 ' in title.lower()):
+            if ('2.5"' in title.lower()) or ("2.5'" in title.lower()) or ("2.5in" in title.lower()) or (
+                    "2.5 inch" in title.lower()) or ("2.5-inch" in title.lower()) or (' 2.5 ' in title.lower()) or (
+                    '2.5”' in title.lower()) or ('2.5 ' in title.lower()) or ('2.5 ' in title.lower()):
                 sizeIn = '2.5"'
 
             previews.append(
                 {
                     "url": url,
-                    "interface": interface,
                     "title": title,
                     "price": price,
+                    "currency": currency,
                     "shipping": shipping,
                     "condition": condition,
                     "photo": photo,
                     "size": size,
                     "physicalSize": sizeIn,
+                    "interface": interface,
                     "price_per_tb": price_per_tb,
                 }
             )
-        except:
-            pass
+        except Exception as e:
+            print(f"Error parsing item: {e}")
 
     return previews
 
-
-# Sorting map
-SORTING_MAP = {
-    "best_match": 12,
-    "ending_soonest": 1,
-    "newly_listed": 10,
-}
-
-
 # Scraping function
-async def scrape_search(
-    query,
-    max_pages=25,
-    category=0,
-    items_per_page=240,
-    sort: Literal["best_match", "ending_soonest", "newly_listed"] = "newly_listed",
-) -> List[ProductPreviewResult]:
+async def scrape_site(url: str, term: str, max_pages=25) -> List[dict]:
     def make_request(page):
-        return "https://www.ebay.com/sch/i.html?" + urlencode(
+        return f"{url}/sch/i.html?" + urlencode(
             {
-                "_nkw": query,
-                "_sacat": category,
-                "_ipg": items_per_page,
-                "_sop": SORTING_MAP[sort],
+                "_nkw": term,
+                "_ipg": 240,
+                "_sop": 10,  # Sort by newly listed
                 "_pgn": page,
                 "LH_BIN": 1,  # "Buy It Now" filter
             }
         )
 
-    # Fetch the first page
-    first_page = await session.get(make_request(page=1))
-    results = parse_search(first_page)
+    results = []
 
-    # Handle pagination
-    total_results_text = Selector(first_page.text).css(".srp-controls__count-heading>span::text").get()
-    total_results = int(total_results_text.replace(",", "").replace('+', '')) if total_results_text else 0
-    total_pages = 25
-
-    # Fetch additional pages concurrently
-    other_pages = [session.get(make_request(page=i)) for i in range(2, total_pages + 1)]
-    for response in asyncio.as_completed(other_pages):
-        try:
-            page_response = await response
-            results.extend(parse_search(page_response))
-            print(page_response.status_code)
-        except Exception as e:
-            print(f"Failed to scrape page: {e}")
-
+    # Use tqdm for a progress bar
+    with tqdm_asyncio(total=max_pages, desc="Scraping Pages", unit="page") as progress_bar:
+        for page in range(1, max_pages + 1):
+            try:
+                response = await session.get(make_request(page))
+                results.extend(parse_search(response))
+            except Exception as e:
+                print(f"Error fetching results from {url} page {page}: {e}")
+            finally:
+                progress_bar.update(1)  # Increment the progress bar
     return results
 
+# Main function to scrape all sites and save separate files
+async def scrape_all_sites(json_file: str, output_folder: str):
+    with open(json_file, "r", encoding="utf-8") as f:
+        sites = json.load(f)["sites"]
 
-# Save results to JSON file
-def save_to_json(data: List[ProductPreviewResult], filename: str):
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+    for site in sites:
+        country = site["country"]
+        print(f"Scraping {country} ({site['url']}) with term '{site['local_term']}'...")
+        results = await scrape_site(url=site["url"], term=site["local_term"])
 
+        # Save results to a separate file for each country
+        output_file = f"{output_folder}/{country}.json"
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=4)
 
-# Example usage
-async def main():
-    query = "hard drive"
-    while True:
-        results = await scrape_search(query=query, max_pages=2)
-        save_to_json(results, "data.json")
-        print(f"Saved {len(results)} results to ebay_results.json")
-        time.sleep(900)
-
+        print(f"Saved {len(results)} results to {output_file}.")
 
 # Run the scraper
 if __name__ == "__main__":
-    asyncio.run(main())
+    import os
+
+    # Create output directory if not exists
+    output_dir = "ebay_results"
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Run the scraper
+    asyncio.run(scrape_all_sites("sites.json", output_dir))
