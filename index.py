@@ -134,18 +134,18 @@ async def scrape_site(url: str, term: str, max_pages=25) -> List[dict]:
 async def scrape_all_sites(json_file: str, output_folder: str):
     with open(json_file, "r", encoding="utf-8") as f:
         sites = json.load(f)["sites"]
+    while true:
+        for site in sites:
+            country = site["country"]
+            print(f"Scraping {country} ({site['url']}) with term '{site['local_term']}'...")
+            results = await scrape_site(url=site["url"], term=site["local_term"])
 
-    for site in sites:
-        country = site["country"]
-        print(f"Scraping {country} ({site['url']}) with term '{site['local_term']}'...")
-        results = await scrape_site(url=site["url"], term=site["local_term"])
+            # Save results to a separate file for each country
+            output_file = f"{output_folder}/{country}.json"
+            with open(output_file, "w", encoding="utf-8") as f:
+                json.dump(results, f, indent=4)
 
-        # Save results to a separate file for each country
-        output_file = f"{output_folder}/{country}.json"
-        with open(output_file, "w", encoding="utf-8") as f:
-            json.dump(results, f, indent=4)
-
-        print(f"Saved {len(results)} results to {output_file}.")
+            print(f"Saved {len(results)} results to {output_file}.")
 
 # Run the scraper
 if __name__ == "__main__":
@@ -154,6 +154,5 @@ if __name__ == "__main__":
     # Create output directory if not exists
     output_dir = "ebay_results"
     os.makedirs(output_dir, exist_ok=True)
-
     # Run the scraper
     asyncio.run(scrape_all_sites("sites.json", output_dir))
