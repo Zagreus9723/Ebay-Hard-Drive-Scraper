@@ -1,0 +1,189 @@
+{
+  "sites": [
+    {
+      "country": "United States",
+      "url": "https://www.ebay.com",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "United Kingdom",
+      "url": "https://www.ebay.co.uk",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Germany",
+      "url": "https://www.ebay.de",
+      "local_term": "Festplatte"
+    },
+    {
+      "country": "France",
+      "url": "https://www.ebay.fr",
+      "local_term": "disque dur"
+    },
+    {
+      "country": "Italy",
+      "url": "https://www.ebay.it",
+      "local_term": "disco rigido"
+    },
+    {
+      "country": "Spain",
+      "url": "https://www.ebay.es",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Australia",
+      "url": "https://www.ebay.com.au",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Canada (English)",
+      "url": "https://www.ebay.ca",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Canada (French)",
+      "url": "https://www.cafr.ebay.ca",
+      "local_term": "disque dur"
+    },
+    {
+      "country": "Netherlands",
+      "url": "https://www.ebay.nl",
+      "local_term": "harde schijf"
+    },
+    {
+      "country": "Poland",
+      "url": "https://www.ebay.pl",
+      "local_term": "dysk twardy"
+    },
+    {
+      "country": "Belgium (Dutch)",
+      "url": "https://www.benl.ebay.be",
+      "local_term": "harde schijf"
+    },
+    {
+      "country": "Belgium (French)",
+      "url": "https://www.befr.ebay.be",
+      "local_term": "disque dur"
+    },
+    {
+      "country": "Austria",
+      "url": "https://www.ebay.at",
+      "local_term": "Festplatte"
+    },
+    {
+      "country": "Switzerland (German)",
+      "url": "https://www.ebay.ch",
+      "local_term": "Festplatte"
+    },
+    {
+      "country": "Switzerland (French)",
+      "url": "https://www.ebay.ch",
+      "local_term": "disque dur"
+    },
+    {
+      "country": "Ireland",
+      "url": "https://www.ebay.ie",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Malaysia",
+      "url": "https://www.ebay.com.my",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Singapore",
+      "url": "https://www.ebay.com.sg",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Philippines",
+      "url": "https://www.ebay.ph",
+      "local_term": "hard drive"
+    },
+    {
+      "country": "Hong Kong",
+      "url": "https://www.ebay.com.hk",
+      "local_term": "硬盘"
+    },
+    {
+      "country": "China",
+      "url": "https://cn.ebay.com",
+      "local_term": "硬盘"
+    },
+    {
+      "country": "Portugal",
+      "url": "https://pt.ebay.com",
+      "local_term": "disco rígido"
+    },
+    {
+      "country": "Belarus",
+      "url": "https://by.ebay.com",
+      "local_term": "жёсткий диск"
+    },
+    {
+      "country": "Kazakhstan",
+      "url": "https://kz.ebay.com",
+      "local_term": "жёсткий диск"
+    },
+    {
+      "country": "Brazil",
+      "url": "https://br.ebay.com",
+      "local_term": "disco rígido"
+    },
+    {
+      "country": "Colombia",
+      "url": "https://co.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Argentina",
+      "url": "https://ar.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Bolivia",
+      "url": "https://bo.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Chile",
+      "url": "https://cl.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Costa Rica",
+      "url": "https://cr.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Dominican Republic",
+      "url": "https://do.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Ecuador",
+      "url": "https://ec.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "El Salvador",
+      "url": "https://sv.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Guatemala",
+      "url": "https://gt.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Honduras",
+      "url": "https://hn.ebay.com",
+      "local_term": "disco duro"
+    },
+    {
+      "country": "Uruguay",
+      "url": "https://uy.ebay.com",
+      "local_term": "disco duro"
+    }
+  ]
+}
