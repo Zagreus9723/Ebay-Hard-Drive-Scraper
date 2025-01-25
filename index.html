@@ -4,331 +4,313 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <meta name="description" content="Find the best deals on hard drives on ebay with our detailed price comparison and filtering features. Sort by price, size, condition, and more.">
-    <meta name="keywords" content="ebay hdd, ebay hard drives, hard drives, disk prices, price comparison, hard drive deals, HDD prices, filter hard drives">
+
+    <!-- Bootstrap and Bootstrap Table CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+    <!-- Meta Information -->
+    <meta name="description"
+          content="Find the best deals on hard drives on eBay with our detailed price comparison and filtering features. Sort by price, size, condition, and more.">
+    <meta name="keywords"
+          content="ebay hdd, ebay hard drives, hard drives, disk prices, price comparison, hard drive deals, HDD prices, filter hard drives">
     <meta name="author" content="EBay Drives">
     <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Disk Prices - Compare Hard Drive Deals">
     <meta property="og:description" content="Quickly find the best hard drive deals with price per TB on eBay.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://discountdiskz.com">
     <meta property="og:image" content="https://discountdiskz/favicon.jpg">
+
+    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Disk Prices - Compare Hard Drive Deals">
-    <meta name="twitter:description" content="Find affordable hard drives on ebay with detailed price comparisons and filters.">
-    <script>
-        var my_awesome_script = document.createElement('script');
-        my_awesome_script.setAttribute('src','https://trueanalytics.online/js/script.js');
-        my_awesome_script.setAttribute('data-domain',window.location.hostname);
-        document.head.appendChild(my_awesome_script);
-    </script>
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="db6B2hLJMTA4ChrNqeXkog" async></script>
+    <meta name="twitter:description"
+          content="Find affordable hard drives on eBay with detailed price comparisons and filters.">
+
     <title>EBay Disk Prices</title>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            display: flex;
-            flex-direction: row;
-        }
-        #content {
-            flex: 3;
-        }
-        #filters {
-            flex: 1;
-            margin-left: 20px;
-        }
-        #filters label {
-            display: block;
-            margin: 5px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-            cursor: pointer;
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        #filters {
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-        #filters h3 {
-            margin-top: 0;
-        }
-        .slider-container {
-            margin: 10px 0;
-        }
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9em;
-        }
-        .slider {
+        .select,
+        #locale {
             width: 100%;
         }
-        #conditionFilter label {
-            display: block;
-            margin: 5px 0;
-        }
-        button {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
 
-        th[data-sort] {
-            position: relative;
-            padding-right: 20px; /* Add space for the arrow */
+        .like {
+            margin-right: 10px;
         }
+        .grid-container {
+  display: grid;
+  grid-template-columns: 1fr 5fr; /* Main content: 3 parts, Sidebar: 1 part */
+  gap: 10px; /* Space between columns */
+}
 
-        th[data-sort] .sort-arrow {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 12px;
-            pointer-events: none; /* Prevent interfering with click events on the header */
-        }
+main {
+  background-color: white;
+}
 
-        th[data-sort].ascending .sort-arrow::after {
-            content: '↑';
-        }
-
-        th[data-sort].descending .sort-arrow::after {
-            content: '↓';
-        }
-
-        th[data-sort]:not(.ascending):not(.descending) .sort-arrow::after {
-            content: '⇵';
-        }
+aside {
+  background-color: lightgray;
+}
     </style>
 </head>
-<body>
-    <div id="content">
-        <h1>EBay Disk Prices - Compare Hard Drive Deals</h1>
-        <p>Welcome to the ultimate destination for finding the best deals on hard drives on EBay. Use our filters and sorting options to find exactly what you need at the best price.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th data-sort="title">Title <span class="sort-arrow"></span></th>
-                    <th data-sort="price">Price <span class="sort-arrow"></span></th>
-                    <th data-sort="size">Size <span class="sort-arrow"></span></th>
-                    <th data-sort="price_per_tb">Price per TB <span class="sort-arrow"></span></th>
-                    <th data-sort="interface">Interface <span class="sort-arrow"></span></th>
-                    <th data-sort="physical_size">Physical Size <span class="sort-arrow"></span></th>
-                    <th data-sort="condition">Condition <span class="sort-arrow"></span></th>
-                    <th>Shipping</th>
-                    <th>Link</th>
-                </tr>
-            </thead>
-            <tbody id="diskTableBody"></tbody>
-        </table>
-    </div>
-    <div id="filters">
-        <h3>Advanced Filters</h3>
-        <div class="slider-container">
-            <div class="slider-label">
-                <label for="minSize">Size (TB):</label>
-                <span id="sizeValue">0 - 32</span>
-            </div>
-            <input type="range" id="minSize" class="slider" min="0" max="32" step="1" value="0">
-            <input type="range" id="maxSize" class="slider" min="0" max="32" step="1" value="32">
-        </div>
 
-        <div class="slider-container">
-            <div class="slider-label">
-                <label for="minCost">Price (USD):</label>
-                <span id="priceValue">$0 - $1000</span>
-            </div>
-            <input type="range" id="minCost" class="slider" min="0" max="1000" step="25" value="0">
-            <input type="range" id="maxCost" class="slider" min="0" max="1000" step="25" value="1000">
-        </div>
+<div class="grid-container">
+<aside>
+    <div id="toolbar" class="d-flex align-items-center">
+  <div class="me-3">
+    <label for="min-price" class="form-label">Price Range ($):</label>
+          <span id="price-range">0 - 1000</span>
+    <input type="range" id="min-price" class="form-range" min="0" max="1000" step="1" value="0">
+    <input type="range" id="max-price" class="form-range" min="0" max="1000" step="1" value="1000"></div>
 
-        <h4>Condition</h4>
-        <div id="conditionFilter">
-            <label><input type="checkbox" value="Brand New"> Brand New</label>
-            <label><input type="checkbox" value="New (Other)"> New (Other)</label>
-            <label><input type="checkbox" value="Open Box"> Open Box</label>
-            <label><input type="checkbox" value="Certified - Refurbished"> Certified Refurbished</label>
-            <label><input type="checkbox" value="Excellent - Refurbished"> Excellent Refurbished</label>
-            <label><input type="checkbox" value="Good - Refurbished"> Good Refurbished</label>
-            <label><input type="checkbox" value="Pre-Owned"> Pre-Owned</label>
-            <label><input type="checkbox" value="Parts Only"> Parts Only</label>
-        </div>
+        <div class="me-3">
+    <label for="min-size" class="form-label">Size Range (GB):</label>
+      <span id="size-range">0 - 32</span>
+    <input type="range" id="min-size" class="form-range" min="0" max="32" step="1" value="0">
+    <input type="range" id="max-size" class="form-range" min="0" max="32" step="1" value="2048">
 
-        <h4>Interface</h4>
-        <div id="interfaceFilter">
-            <label><input type="checkbox" value="SATA"> SATA</label>
-            <label><input type="checkbox" value="SAS"> SAS</label>
-            <label><input type="checkbox" value="Unknown"> Unknown</label>
-        </div>
+  </div>
+  <button id="apply-filters" class="btn btn-primary">Apply Filters</button>
+</div>
+</aside>
+    <main>
+<table
+        id="table"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-fullscreen="true"
+        data-show-columns="true"
+        data-show-columns-toggle-all="true"
+        data-detail-view="true"
+        data-show-export="false"
+        data-click-to-select="true"
+        data-detail-formatter="detailFormatter"
+        data-minimum-count-columns="2"
+        data-show-pagination-switch="true"
+        data-pagination="true"
+        data-id-field="title"
+        data-page-list="[10, 25, 50, 100, all]"
+        data-show-footer="true"
+        data-side-pagination="local"
+        data-url="ebay_results/United States.json"
+        data-response-handler="responseHandler"
+data-height="auto">
+</table>
+   </main>
+    <div>
+<script>
+    var $table = $('#table')
+    var $remove = $('#remove')
+    var selections = []
 
-        <h4>Physical Size</h4>
-        <div id="physicalSizeFilter">
-            <label><input type="checkbox" value='2.5"'> 2.5"</label>
-            <label><input type="checkbox" value='3.5"'> 3.5"</label>
-            <label><input type="checkbox" value="Unknown"> Unknown</label>
-        </div>
+    function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.id
+        })
+    }
 
-        <h4>Shipping</h4>
-        <div id="shippingFilter">
-            <label><input type="checkbox" value="Free"> Free Shipping Only</label>
-        </div>
+    function responseHandler(res) {
+        $.each(res.rows, function (i, row) {
+            row.state = $.inArray(row.id, selections) !== -1
+        })
+        return res
+    }
 
-        <button id="applyFilters">Apply Filters</button>
-    </div>
+    function detailFormatter(index, row) {
+        var html = []
+        $.each(row, function (key, value) {
+            html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+        })
+        return html.join('')
+    }
 
-    <script>
-        async function fetchData() {
-            const response = await fetch('data.json'); // Replace with the path to your JSON file
-            return response.json();
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="like" href="javascript:void(0)" title="Like">',
+            '<i class="fa fa-heart"></i>',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0)" title="Remove">',
+            '<i class="fa fa-trash"></i>',
+            '</a>'
+        ].join('')
+    }
+
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            alert('You click like action, row: ' + JSON.stringify(row))
+        },
+        'click .remove': function (e, value, row, index) {
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            })
         }
+    }
 
-        let diskData = [];
-        let filteredData = [];
-        let sortDirection = {}; // To track sort directions for each column
+    function totalTextFormatter(data) {
+        return 'Total'
+    }
 
-        function populateTable(data) {
-            const tableBody = document.getElementById('diskTableBody');
-            tableBody.innerHTML = '';
+    function totalNameFormatter(data) {
+        return data.length
+    }
 
-            data.forEach(disk => {
-                const row = document.createElement('tr');
+    function totalPriceFormatter(data) {
+        var field = this.field
+        return '$' + data.map(function (row) {
+            return +row[field].substring(1)
+        }).reduce(function (sum, i) {
+            return sum + i
+        }, 0)
+    }
 
-                row.innerHTML = `
-                    <td>${disk.title}</td>
-                    <td>$${parseFloat(disk.price).toFixed(2)}</td>
-                    <td>${disk.size}</td>
-                    <td>$${parseFloat(disk.price_per_tb).toFixed(2)}</td>
-                    <td>${disk.interface || 'N/A'}</td>
-                    <td>${disk.physicalSize || 'N/A'}</td>
-                    <td>${disk.condition}</td>
-                    <td>${disk.shipping === 'Free' ? 'Free' : `$${parseFloat(disk.shipping || 0).toFixed(2)}`}</td>
-                    <td><a href="${disk.url}?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=${window.location.hostname}&campid=5339096616&toolid=20001&mkevt=1" target="_blank">View</a></td>
-                `;
+    async function fetchData() {
+        const response = await fetch('ebay_results/United States.json'); // Replace with the path to your JSON file
+        return response.json();
+    }
 
-                if (disk.size !== 0.0 && disk.price_per_tb !== 0.0) {
-                    tableBody.appendChild(row);
+    const sampleData = fetchData();
+
+    function initTable() {
+        $('#table').bootstrapTable({
+            height: 550,
+            columns: [
+                {
+                    field: 'photo',
+                    title: 'Photo',
+                    formatter: (value) => `<img src="${value}" alt="Item Photo" style="width: 50px; height: auto;">`
+                },
+                {
+                    field: 'title',
+                    title: 'Title',
+                    formatter: (value, row) => `<a href="${row.url}" target="_blank">${value}</a>`,
+                    escape: true // Allow HTML content for links
+                },
+                {
+                    field: 'price',
+                    title: 'Price',
+                    sortable: true
+                },
+                {
+                    field: 'shipping',
+                    title: 'Shipping'
+                },
+                {
+                    field: 'condition',
+                    title: 'Condition'
+                },
+                {
+                    field: 'size',
+                    title: 'Size (TB)'
+                },
+                {
+                    field: 'physicalSize',
+                    title: 'Physical Size'
+                },
+                {
+                    field: 'interface',
+                    title: 'Interface'
+                },
+                {
+                    field: 'price_per_tb',
+                    title: 'Price Per TB'
                 }
-            });
-        }
-
-        function sortData(key) {
-            // Toggle sort direction for the selected column
-            if (!sortDirection[key]) sortDirection[key] = 'asc';
-            else sortDirection[key] = sortDirection[key] === 'asc' ? 'desc' : 'asc';
-
-            // Remove sort classes from all other headers
-            document.querySelectorAll('th[data-sort]').forEach(th => {
-                th.classList.remove('ascending', 'descending');
-            });
-
-            // Add the appropriate class to the current header
-            const currentHeader = document.querySelector(`th[data-sort="${key}"]`);
-            currentHeader.classList.add(sortDirection[key] === 'asc' ? 'ascending' : 'descending');
-
-            // Sort the data
-            filteredData.sort((a, b) => {
-                let valA = a[key], valB = b[key];
-
-                if (key === 'price' || key === 'price_per_tb' || key === 'shipping') {
-                    valA = parseFloat(valA.toString().replace('$', '')) || 0;
-                    valB = parseFloat(valB.toString().replace('$', '')) || 0;
-                } else if (key === 'size') {
-                    valA = parseFloat(valA) || 0;
-                    valB = parseFloat(valB) || 0;
-                }
-
-                return sortDirection[key] === 'asc' ? valA - valB : valB - valA;
-            });
-
-            populateTable(filteredData);
-        }
-
-        // Add event listeners to each sortable column
-        document.querySelectorAll('th[data-sort]').forEach(th => {
-            th.addEventListener('click', () => {
-                const key = th.getAttribute('data-sort');
-                sortData(key);
-            });
+            ]
         });
+    }
 
-        function updateSliderValues() {
-            const minSize = document.getElementById('minSize').value;
-            const maxSize = document.getElementById('maxSize').value;
-            const minCost = document.getElementById('minCost').value;
-            const maxCost = document.getElementById('maxCost').value;
+    $(document).ready(() => {
+        initTable();
+    });
 
-            document.getElementById('sizeValue').textContent = `${minSize} - ${maxSize}`;
-            document.getElementById('priceValue').textContent = `$${minCost} - $${maxCost}`;
-        }
+    $(function () {
+        initTable()
 
-        function applyAdvancedFilters() {
-            const minSize = parseFloat(document.getElementById('minSize').value) || 0;
-            const maxSize = parseFloat(document.getElementById('maxSize').value) || Infinity;
-            const minCost = parseFloat(document.getElementById('minCost').value) || 0;
-            const maxCost = parseFloat(document.getElementById('maxCost').value) || Infinity;
-            const selectedConditions = Array.from(document.querySelectorAll('#conditionFilter input:checked'))
-                .map(checkbox => checkbox.value);
-            const selectedInterfaces = Array.from(document.querySelectorAll('#interfaceFilter input:checked'))
-                .map(checkbox => checkbox.value);
-            const selectedPhysicalSizes = Array.from(document.querySelectorAll('#physicalSizeFilter input:checked'))
-                .map(checkbox => checkbox.value);
-            const freeShipping = document.querySelector('#shippingFilter input:checked') ? true : false;
+        $('#locale').change(initTable)
+    })
 
-            filteredData = diskData.filter(disk => {
-                const size = parseFloat(disk.size) || 0;
-                const price = parseFloat(disk.price) || 0;
-                const shippingFree = disk.shipping === 0.0;
+    function setTableHeight() {
+        const viewportHeight = $(window).height(); // Get the window height
+        const toolbarHeight = $('#toolbar').outerHeight(true); // Get toolbar height
+        const offset = 20; // Add some padding or offset if needed
 
-                return (
-                    size >= minSize &&
-                    size <= maxSize &&
-                    price >= minCost &&
-                    price <= maxCost &&
-                    (selectedConditions.length === 0 || selectedConditions.includes(disk.condition)) &&
-                    (selectedInterfaces.length === 0 || selectedInterfaces.includes(disk.interface)) &&
-                    (selectedPhysicalSizes.length === 0 || selectedPhysicalSizes.includes(disk.physicalSize)) &&
-                    (!freeShipping || shippingFree)
-                );
-            });
-            sortDirection = {};
-            sortData('price_per_tb');
-        }
-
-        document.querySelectorAll('.slider').forEach(slider => {
-            slider.addEventListener('input', updateSliderValues);
+        // Set table height dynamically
+        $('#table').bootstrapTable('resetView', {
+            height: viewportHeight - toolbarHeight - offset
         });
+    }
 
-        document.getElementById('applyFilters').addEventListener('click', applyAdvancedFilters);
+    $(window).on('resize', setTableHeight); // Recalculate height on window resize
+    $(document).ready(() => {
+        initTable(); // Initialize the table
+        setTableHeight(); // Set initial height
+    });
 
-        fetchData().then(data => {
-            diskData = data;
-            filteredData = [...diskData];
-            sortData('price_per_tb');
-        });
-    </script>
-</body>
-</html>
+function applyFilters() {
+  const minPrice = parseFloat(document.getElementById('min-price').value);
+  const maxPrice = parseFloat(document.getElementById('max-price').value);
+  const minSize = parseFloat(document.getElementById('min-size').value);
+  const maxSize = parseFloat(document.getElementById('max-size').value);
+
+  // Filter the data
+  const filteredData = originalData.filter(item => {
+    const sizeTB = item.size; // Convert TB to GB
+    return item.price >= minPrice &&
+           item.price <= maxPrice &&
+           sizeTB >= minSize &&
+           sizeTB <= maxSize;
+  });
+
+  // Reload the table with filtered data
+  $('#table').bootstrapTable('load', filteredData);
+}
+
+document.getElementById('apply-filters').addEventListener('click', applyFilters);
+
+let originalData = []; // Store original unfiltered data
+
+$(document).ready(() => {
+  // Initialize the table
+  initTable();
+
+  // Fetch data and store it
+  $.getJSON('ebay_results/United States.json', (data) => {
+    originalData = responseHandler(data);
+    $('#table').bootstrapTable('load', originalData);
+  });
+
+  // Attach event listener to filter button
+  $('#apply-filters').click(applyFilters);
+});
+function updateRangeDisplays() {
+  const minPrice = document.getElementById('min-price').value;
+  const maxPrice = document.getElementById('max-price').value;
+  document.getElementById('price-range').innerText = `$${minPrice} - $${maxPrice}`;
+
+  const minSize = document.getElementById('min-size').value;
+  const maxSize = document.getElementById('max-size').value;
+  document.getElementById('size-range').innerText = `${minSize} TB - ${maxSize} TB`;
+}
+
+// Attach event listeners to update range displays
+document.getElementById('min-price').addEventListener('input', updateRangeDisplays);
+document.getElementById('max-price').addEventListener('input', updateRangeDisplays);
+document.getElementById('min-size').addEventListener('input', updateRangeDisplays);
+document.getElementById('max-size').addEventListener('input', updateRangeDisplays);
+
+</script>
