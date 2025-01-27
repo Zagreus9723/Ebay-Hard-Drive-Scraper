@@ -77,25 +77,29 @@ var $table = $('#table')
                 {
                     field: 'title',
                     title: 'Title',
-                    formatter: (value, row) => `<a href="${row.url}" target="_blank">${value}</a>`,
+                    formatter: (value, row) => `<a href="${row.url}?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=${window.location.hostname}&campid=5339096616&toolid=20001&mkevt=1" target="_blank">${value}</a>`,
                     escape: true // Allow HTML content for links
                 },
                 {
                     field: 'price',
                     title: 'Price',
+                    formatter: (value, row) => `${row.currency}${value}`,
                     sortable: true
                 },
                 {
                     field: 'shipping',
-                    title: 'Shipping'
-                },
-                {
-                    field: 'condition',
-                    title: 'Condition'
+                    title: 'Shipping',
+                    formatter: (value, row) => `${row.currency}${value}`
                 },
                 {
                     field: 'size',
                     title: 'Size (TB)',
+                    sortable: true
+                },
+                {
+                    field: 'price_per_tb',
+                    title: 'Price Per TB',
+                    formatter: (value, row) => `${row.currency}${value}`,
                     sortable: true
                 },
                 {
@@ -107,10 +111,9 @@ var $table = $('#table')
                     title: 'Interface'
                 },
                 {
-                    field: 'price_per_tb',
-                    title: 'Price Per TB',
-                    sortable: true
-                }
+                    field: 'condition',
+                    title: 'Condition'
+                },
             ]
         });
     }
@@ -147,14 +150,29 @@ function applyFilters() {
   const maxPrice = parseFloat(document.getElementById('max-price').value);
   const minSize = parseFloat(document.getElementById('min-size').value);
   const maxSize = parseFloat(document.getElementById('max-size').value);
+  const selectedConditions = Array.from(document.querySelectorAll('#condition-filter input:checked'))
+      .map(checkbox => checkbox.value);
+  const selectedInterfaces = Array.from(document.querySelectorAll('#interface-filter input:checked'))
+      .map(checkbox => checkbox.value);
+  const selectedPhysicalSizes = Array.from(document.querySelectorAll('#physical-size-filter input:checked'))
+      .map(checkbox => checkbox.value);
+  const freeShipping = document.querySelector('#shipping-filter input:checked') ? true : false;
 
-  // Filter the data
-  const filteredData = originalData.filter(item => {
-    const sizeTB = item.size; // Convert TB to GB
-    return (item.price >= minPrice &&
-           item.price <= maxPrice &&
-           sizeTB >= minSize &&
-           sizeTB <= maxSize);
+  filteredData = originalData.filter(disk => {
+      const size = parseFloat(disk.size) || 0;
+      const price = parseFloat(disk.price) || 0;
+      const shippingFree = disk.shipping === 0.0;
+
+      return (
+          size >= minSize &&
+          size <= maxSize &&
+          price >= minPrice &&
+          price <= maxPrice &&
+          (selectedConditions.length === 0 || selectedConditions.includes(disk.condition)) &&
+          (selectedInterfaces.length === 0 || selectedInterfaces.includes(disk.interface)) &&
+          (selectedPhysicalSizes.length === 0 || selectedPhysicalSizes.includes(disk.physicalSize)) &&
+          (!freeShipping || shippingFree)
+      );
   });
 
   // Reload the table with filtered data

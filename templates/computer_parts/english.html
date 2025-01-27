@@ -75,25 +75,6 @@ The above copyright notice and this permission notice shall be included in all c
         </div>
     </header>
     <div class="row">
-        <aside class="col-2 d-flex flex-column align-items-center position-sticky">
-            <button id="apply-filters" class="btn btn-primary">Apply Filters</button>
-            <div class="me-3">
-                <label for="min-price" class="form-label">Price Range ($):</label>
-                <span id="price-range">0 - 5000</span>
-                <input type="range" id="min-price" class="form-range" min="0" max="1000" step="1" value="0">
-                <input type="range" id="max-price" class="form-range" min="0" max="5000" step="1" value="5000">
-            </div>
-
-            <div class="me-3">
-                <label for="min-size" class="form-label">Size Range (TB):</label>
-                <span id="size-range">0 - 32</span>
-                <input type="range" id="min-size" class="form-range" min="0" max="32" step="1" value="0">
-                <input type="range" id="max-size" class="form-range" min="0" max="32" step="1" value="2048">
-
-            </div>
-        </aside>
-
-
         <main class="col-10">
             <table
                     id="table"
@@ -118,6 +99,64 @@ The above copyright notice and this permission notice shall be included in all c
                     data-height="auto">
             </table>
         </main>
+        <aside class="col-2 d-flex flex-column align-items-center position-sticky top-0 bg-light p-3" style="height: 100vh;">
+            <h3 class="text-center mb-4">Advanced Filters</h3>
+
+            <!-- Price Range -->
+            <div class="mb-4 w-100">
+                <label for="min-price" class="form-label">Price Range (USD):</label>
+                <span id="price-range">$0 - $5000</span>
+                <input type="range" id="min-price" class="form-range" min="0" max="1000" step="25" value="0">
+                <input type="range" id="max-price" class="form-range" min="0" max="1000" step="25" value="1000">
+            </div>
+
+            <!-- Size Range -->
+            <div class="mb-4 w-100">
+                <label for="min-size" class="form-label">Size Range (TB):</label>
+                <span id="size-range">0 TB - 32 TB</span>
+                <input type="range" id="min-size" class="form-range" min="0" max="32" step="1" value="0">
+                <input type="range" id="max-size" class="form-range" min="0" max="32" step="1" value="32">
+            </div>
+
+            <!-- Condition Filters -->
+            <h4 class="mb-2">Condition</h4>
+            <div id="condition-filter" class="mb-4 w-100">
+                <label><input type="checkbox" value="Brand New"> Brand New</label><br>
+                <label><input type="checkbox" value="New (Other)"> New (Other)</label><br>
+                <label><input type="checkbox" value="Open Box"> Open Box</label><br>
+                <label><input type="checkbox" value="Certified - Refurbished"> Certified Refurbished</label><br>
+                <label><input type="checkbox" value="Excellent - Refurbished"> Excellent Refurbished</label><br>
+                <label><input type="checkbox" value="Good - Refurbished"> Good Refurbished</label><br>
+                <label><input type="checkbox" value="Pre-Owned"> Pre-Owned</label><br>
+                <label><input type="checkbox" value="Parts Only"> Parts Only</label>
+            </div>
+
+            <!-- Interface Filters -->
+            <h4 class="mb-2">Interface</h4>
+            <div id="interface-filter" class="mb-4 w-100">
+                <label><input type="checkbox" value="SATA"> SATA</label><br>
+                <label><input type="checkbox" value="SAS"> SAS</label><br>
+                <label><input type="checkbox" value="Unknown"> Unknown</label>
+            </div>
+
+            <!-- Physical Size Filters -->
+            <h4 class="mb-2">Physical Size</h4>
+            <div id="physical-size-filter" class="mb-4 w-100">
+                <label><input type="checkbox" value='2.5"'> 2.5"</label><br>
+                <label><input type="checkbox" value='3.5"'> 3.5"</label><br>
+                <label><input type="checkbox" value="Unknown"> Unknown</label>
+            </div>
+
+            <!-- Shipping Filters -->
+            <h4 class="mb-2">Shipping</h4>
+            <div id="shipping-filter" class="mb-4 w-100">
+                <label><input type="checkbox" value="Free"> Free Shipping Only</label>
+            </div>
+
+            <!-- Apply Filters Button -->
+            <button id="apply-filters" class="btn btn-primary mt-auto">Apply Filters</button>
+        </aside>
+
     </div>
 </div>
 <script>

@@ -9,6 +9,6 @@ def hard_drives_redirect(request):
 
 urlpatterns = [
     path('home/', views.homepage, name='home'),
-    path('', hard_drives_redirect, name='about'),
-    path('hard_drives/', views.hard_drives, name='hard_drives'),
+    path('', views.hard_drives, name='hard_drives'),
+    # path('hard_drives/', views.hard_drives, name='hard_drives'),
 ]
