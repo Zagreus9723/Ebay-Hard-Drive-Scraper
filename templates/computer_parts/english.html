@@ -81,46 +81,16 @@ The above copyright notice and this permission notice shall be included in all c
         >
           Localizations
         </button>
-        <ul class="dropdown-menu" aria-labelledby="localizationDropdown">
-          <!-- Dropdown items -->
-          <li><a class="dropdown-item" href="/canada"><img src="https://flagcdn.com/ca.svg" alt="Canada flag"> Canada</a></li>
-          <li><a class="dropdown-item" href="/canada french"><img src="https://flagcdn.com/ca.svg" alt="Canada flag"> Canada (French)</a></li>
-          <li><a class="dropdown-item" href="/united-states"><img src="https://flagcdn.com/us.svg" alt="United States flag"> United States</a></li>
-          <li><a class="dropdown-item" href="/united-kingdom"><img src="https://flagcdn.com/gb.svg" alt="United Kingdom flag"> United Kingdom</a></li>
-          <li><a class="dropdown-item" href="/germany"><img src="https://flagcdn.com/de.svg" alt="Germany flag"> Deutschland</a></li>
-          <li><a class="dropdown-item" href="/france"><img src="https://flagcdn.com/fr.svg" alt="France flag"> France</a></li>
-          <li><a class="dropdown-item" href="/italy"><img src="https://flagcdn.com/it.svg" alt="Italy flag"> Italia</a></li>
-          <li><a class="dropdown-item" href="/spain"><img src="https://flagcdn.com/es.svg" alt="Spain flag"> España</a></li>
-          <li><a class="dropdown-item" href="/australia"><img src="https://flagcdn.com/au.svg" alt="Australia flag"> Australia</a></li>
-          <li><a class="dropdown-item" href="/netherlands"><img src="https://flagcdn.com/nl.svg" alt="Netherlands flag"> Nederland</a></li>
-          <li><a class="dropdown-item" href="/poland"><img src="https://flagcdn.com/pl.svg" alt="Poland flag"> Polska</a></li>
-          <li><a class="dropdown-item" href="/belgium dutch"><img src="https://flagcdn.com/be.svg" alt="Belgium flag"> België (Dutch)</a></li>
-          <li><a class="dropdown-item" href="/belgium french"><img src="https://flagcdn.com/be.svg" alt="Belgium flag"> Belgique (French)</a></li>
-          <li><a class="dropdown-item" href="/austria"><img src="https://flagcdn.com/at.svg" alt="Austria flag"> Österreich</a></li>
-          <li><a class="dropdown-item" href="/switzerland german"><img src="https://flagcdn.com/ch.svg" alt="Switzerland flag"> Schweiz (German)</a></li>
-          <li><a class="dropdown-item" href="/switzerland french"><img src="https://flagcdn.com/ch.svg" alt="Switzerland flag"> Suisse (French)</a></li>
-          <li><a class="dropdown-item" href="/ireland"><img src="https://flagcdn.com/ie.svg" alt="Ireland flag"> Ireland</a></li>
-          <li><a class="dropdown-item" href="/malaysia"><img src="https://flagcdn.com/my.svg" alt="Malaysia flag"> Malaysia</a></li>
-          <li><a class="dropdown-item" href="/singapore"><img src="https://flagcdn.com/sg.svg" alt="Singapore flag"> Singapore</a></li>
-          <li><a class="dropdown-item" href="/philippines"><img src="https://flagcdn.com/ph.svg" alt="Philippines flag"> Philippines</a></li>
-          <li><a class="dropdown-item" href="/hong-kong"><img src="https://flagcdn.com/hk.svg" alt="Hong Kong flag"> 香港</a></li>
-          <li><a class="dropdown-item" href="/china"><img src="https://flagcdn.com/cn.svg" alt="China flag"> 中国</a></li>
-          <li><a class="dropdown-item" href="/portugal"><img src="https://flagcdn.com/pt.svg" alt="Portugal flag"> Portugal</a></li>
-          <li><a class="dropdown-item" href="/belarus"><img src="https://flagcdn.com/by.svg" alt="Belarus flag"> Беларусь</a></li>
-          <li><a class="dropdown-item" href="/kazakhstan"><img src="https://flagcdn.com/kz.svg" alt="Kazakhstan flag"> Қазақстан</a></li>
-          <li><a class="dropdown-item" href="/brazil"><img src="https://flagcdn.com/br.svg" alt="Brazil flag"> Brasil</a></li>
-          <li><a class="dropdown-item" href="/colombia"><img src="https://flagcdn.com/co.svg" alt="Colombia flag"> Colombia</a></li>
-          <li><a class="dropdown-item" href="/argentina"><img src="https://flagcdn.com/ar.svg" alt="Argentina flag"> Argentina</a></li>
-          <li><a class="dropdown-item" href="/bolivia"><img src="https://flagcdn.com/bo.svg" alt="Bolivia flag"> Bolivia</a></li>
-          <li><a class="dropdown-item" href="/chile"><img src="https://flagcdn.com/cl.svg" alt="Chile flag"> Chile</a></li>
-          <li><a class="dropdown-item" href="/costa-rica"><img src="https://flagcdn.com/cr.svg" alt="Costa Rica flag"> Costa Rica</a></li>
-          <li><a class="dropdown-item" href="/dominican-republic"><img src="https://flagcdn.com/do.svg" alt="Dominican Republic flag"> República Dominicana</a></li>
-          <li><a class="dropdown-item" href="/ecuador"><img src="https://flagcdn.com/ec.svg" alt="Ecuador flag"> Ecuador</a></li>
-          <li><a class="dropdown-item" href="/el-salvador"><img src="https://flagcdn.com/sv.svg" alt="El Salvador flag"> El Salvador</a></li>
-          <li><a class="dropdown-item" href="/guatemala"><img src="https://flagcdn.com/gt.svg" alt="Guatemala flag"> Guatemala</a></li>
-          <li><a class="dropdown-item" href="/honduras"><img src="https://flagcdn.com/hn.svg" alt="Honduras flag"> Honduras</a></li>
-          <li><a class="dropdown-item" href="/uruguay"><img src="https://flagcdn.com/uy.svg" alt="Uruguay flag"> Uruguay</a></li>
-        </ul>
+              <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
+        {% for loc in localizations %}
+          <li>
+            <a class="dropdown-item" href="{{ loc.href }}">
+              <img src="{{ loc.flag }}" alt="{{ loc.name }} flag" style="max-width: 20px; margin-right: 8px;">
+              {{ loc.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
       </div>
     </div>
 </nav>
@@ -150,7 +120,7 @@ The above copyright notice and this permission notice shall be included in all c
                     data-height="auto">
             </table>
         </main>
-        <aside class="col-2 d-flex flex-column align-items-center position-sticky top-0 bg-light p-3" style="height: 100vh;">
+        <aside class="col-2 d-flex flex-column align-items-center position-sticky top-0 bg-light p-3 overflow-auto vh-100">
             <h3 class="text-center mb-4">Advanced Filters</h3>
 
             <!-- Price Range -->
@@ -205,7 +175,10 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
 
             <!-- Apply Filters Button -->
+            <div id="filter-apply" class="mb-4 w-100">
             <button id="apply-filters" class="btn btn-primary mt-auto">Apply Filters</button>
+            </div>
+            <div id="spacing" class="mb-4 w-100"></div>
         </aside>
 
     </div>
