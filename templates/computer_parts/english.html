@@ -84,7 +84,7 @@ The above copyright notice and this permission notice shall be included in all c
               <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
         {% for loc in localizations %}
           <li>
-            <a class="dropdown-item" href="{{ loc.href }}">
+            <a class="dropdown-item {%if loc.name != 'United States'%}disabled{%endif%}" href="{{ loc.href }}">
               <img src="{{ loc.flag }}" alt="{{ loc.name }} flag" style="max-width: 20px; margin-right: 8px;">
               {{ loc.name }}
             </a>
