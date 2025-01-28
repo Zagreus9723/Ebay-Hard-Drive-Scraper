@@ -70,60 +70,71 @@ The above copyright notice and this permission notice shall be included in all c
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <!-- Dropdown -->
-      <div class="dropdown">
-        <button
-          class="btn btn-light dropdown-toggle"
-          type="button"
-          id="localizationDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Localizations
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <button
+                class="btn btn-light dropdown-toggle"
+                type="button"
+                id="localizationDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                Localizations
+            </button>
+            <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
+                {% for loc in localizations %}
+                    <li>
+                        <a class="dropdown-item {% if loc.name != 'United States' %}disabled{% endif %}" href="{{ loc.href }}">
+                            <img src="{{ loc.flag }}" alt="{{ loc.name }} flag" style="max-width: 20px; margin-right: 8px;">
+                            {{ loc.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Toggle button for mobile -->
+        <button class="btn btn-primary d-lg-none" id="toggle-menu">
+            Filters
         </button>
-              <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
-        {% for loc in localizations %}
-          <li>
-            <a class="dropdown-item {%if loc.name != 'United States'%}disabled{%endif%}" href="{{ loc.href }}">
-              <img src="{{ loc.flag }}" alt="{{ loc.name }} flag" style="max-width: 20px; margin-right: 8px;">
-              {{ loc.name }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-      </div>
     </div>
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <main class="col-10">
+        <!-- Main Content -->
+        <main class="col-lg-10">
             <table
-                    id="table"
-                    data-search="true"
-                    data-show-refresh="true"
-                    data-show-toggle="true"
-                    data-show-fullscreen="true"
-                    data-show-columns="true"
-                    data-show-columns-toggle-all="true"
-                    data-detail-view="true"
-                    data-show-export="false"
-                    data-click-to-select="true"
-                    data-detail-formatter="detailFormatter"
-                    data-minimum-count-columns="2"
-                    data-show-pagination-switch="true"
-                    data-pagination="true"
-                    data-id-field="title"
-                    data-page-list="[10, 25, 50, 100, all]"
-                    data-side-pagination="local"
-                    data-url="{% static 'json_data/United States.json' %}"
-                    data-response-handler="responseHandler"
-                    data-height="auto">
+                id="table"
+                data-search="true"
+                data-show-refresh="true"
+                data-show-toggle="true"
+                data-show-fullscreen="true"
+                data-show-columns="true"
+                data-show-columns-toggle-all="true"
+                data-detail-view="true"
+                data-show-export="false"
+                data-click-to-select="true"
+                data-detail-formatter="detailFormatter"
+                data-minimum-count-columns="2"
+                data-show-pagination-switch="true"
+                data-pagination="true"
+                data-id-field="title"
+                data-page-list="[10, 25, 50, 100, all]"
+                data-side-pagination="local"
+                data-url="{% static 'json_data/United States.json' %}"
+                data-response-handler="responseHandler"
+                data-height="auto">
             </table>
         </main>
-        <aside class="col-2 d-flex flex-column align-items-center position-sticky top-0 bg-light p-3 overflow-auto vh-100">
+
+        <!-- Aside (Filters) -->
+        <aside
+            id="filter-menu"
+            class="col-lg-2 d-none d-lg-flex flex-column align-items-center position-sticky top-0 bg-light p-3 overflow-auto vh-100"
+        >
             <h3 class="text-center mb-4">Advanced Filters</h3>
 
-            <!-- Price Range -->
+            <!-- Filters -->
             <div class="mb-4 w-100">
                 <label for="min-price" class="form-label">Price Range (USD):</label>
                 <span id="price-range">$0 - $5000</span>
@@ -131,7 +142,6 @@ The above copyright notice and this permission notice shall be included in all c
                 <input type="range" id="max-price" class="form-range" min="0" max="1000" step="25" value="1000">
             </div>
 
-            <!-- Size Range -->
             <div class="mb-4 w-100">
                 <label for="min-size" class="form-label">Size Range (TB):</label>
                 <span id="size-range">0 TB - 32 TB</span>
@@ -139,64 +149,34 @@ The above copyright notice and this permission notice shall be included in all c
                 <input type="range" id="max-size" class="form-range" min="0" max="32" step="1" value="32">
             </div>
 
-            <!-- Condition Filters -->
-            <h4 class="mb-2">Condition</h4>
-            <div id="condition-filter" class="mb-4 w-100">
-                <label><input type="checkbox" value="Brand New"> Brand New</label><br>
-                <label><input type="checkbox" value="New (Other)"> New (Other)</label><br>
-                <label><input type="checkbox" value="Open Box"> Open Box</label><br>
-                <label><input type="checkbox" value="Certified - Refurbished"> Certified Refurbished</label><br>
-                <label><input type="checkbox" value="Excellent - Refurbished"> Excellent Refurbished</label><br>
-                <label><input type="checkbox" value="Good - Refurbished"> Good Refurbished</label><br>
-                <label><input type="checkbox" value="Pre-Owned"> Pre-Owned</label><br>
-                <label><input type="checkbox" value="Parts Only"> Parts Only</label>
-            </div>
+            <!-- Add other filters as needed -->
 
-            <!-- Interface Filters -->
-            <h4 class="mb-2">Interface</h4>
-            <div id="interface-filter" class="mb-4 w-100">
-                <label><input type="checkbox" value="SATA"> SATA</label><br>
-                <label><input type="checkbox" value="SAS"> SAS</label><br>
-                <label><input type="checkbox" value="Unknown"> Unknown</label>
-            </div>
-
-            <!-- Physical Size Filters -->
-            <h4 class="mb-2">Physical Size</h4>
-            <div id="physical-size-filter" class="mb-4 w-100">
-                <label><input type="checkbox" value='2.5"'> 2.5"</label><br>
-                <label><input type="checkbox" value='3.5"'> 3.5"</label><br>
-                <label><input type="checkbox" value="Unknown"> Unknown</label>
-            </div>
-
-            <!-- Shipping Filters -->
-            <h4 class="mb-2">Shipping</h4>
-            <div id="shipping-filter" class="mb-4 w-100">
-                <label><input type="checkbox" value="Free"> Free Shipping Only</label>
-            </div>
-
-            <!-- Apply Filters Button -->
             <div id="filter-apply" class="mb-4 w-100">
-            <button id="apply-filters" class="btn btn-primary mt-auto">Apply Filters</button>
+                <button id="apply-filters" class="btn btn-primary mt-auto">Apply Filters</button>
             </div>
-            <div id="spacing" class="mb-4 w-100"></div>
         </aside>
-
     </div>
 </div>
+
 <script>
-$(document).ready(() => {
-  // Initialize the table
-  initTable();
+    $(document).ready(() => {
+        // Initialize the table
+        initTable();
 
-  // Fetch data and store it
-  $.getJSON("{% static 'json_data/United States.json' %}", (data) => {
-    originalData = responseHandler(data);
-    $('#table').bootstrapTable('load', originalData);
-  });
+        // Fetch data and store it
+        $.getJSON("{% static 'json_data/United States.json' %}", (data) => {
+            originalData = responseHandler(data);
+            $('#table').bootstrapTable('load', originalData);
+        });
 
-  // Attach event listener to filter button
-  $('#apply-filters').click(applyFilters);
-});
+        // Attach event listener to filter button
+        $('#apply-filters').click(applyFilters);
+
+        // Mobile menu toggle
+        $('#toggle-menu').click(() => {
+            $('#filter-menu').toggleClass('d-none');
+        });
+    });
 </script>
 <script src="{% static 'js/table.js' %}"></script>
 </body>
