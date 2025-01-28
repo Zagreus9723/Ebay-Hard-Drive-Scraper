@@ -137,7 +137,7 @@ async def scrape_site(url: str, term: str, max_pages=25) -> List[dict]:
 # Main function to scrape all sites and save separate files
 async def scrape_all_sites(json_file: str):
     with open(json_file, "r", encoding="utf-8") as f:
-        sites = json.load(f)["sites"]
+        sites = json.load(f)["static/sites/sites"]
     while True:
         for site in sites:
             country = site["country"]
