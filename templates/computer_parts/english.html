@@ -80,6 +80,7 @@
             z-index: 1050; /* Ensure it appears above other elements */
             background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
             transition: left 0.3s ease;
+            overflow: auto ;
         }
 
         aside.active {
@@ -151,7 +152,7 @@
         </main>
 
         <!-- Aside (Filters) -->
-        <aside id="filter-menu" class="col-lg-2 col-12 d-lg-flex flex-column align-items-center top-0 bg-light p-3 overflow-auto vh-100">
+        <aside id="filter-menu" class="d-none col-lg-2 col-12 d-lg-flex flex-column align-items-center top-0 bg-light p-3 overflow-auto vh-100">
                     <button class="btn btn-primary d-lg-none" id="detoggle-menu">
             Close Filters
         </button>
@@ -233,13 +234,13 @@
 
         // Mobile menu toggle
         $('#toggle-menu').click(() => {
-            $('#filter-menu').toggleClass('active');
+            $('#filter-menu').toggleClass('active d-none');
         });
         $('#detoggle-menu').click(() => {
-            $('#filter-menu').toggleClass('active');
+            $('#filter-menu').toggleClass('active d-none');
         });
         $('#apply-filters').click(() => {
-            $('#filter-menu').toggleClass('active');
+            $('#filter-menu').toggleClass('active d-none');
         });
     });
 </script>
