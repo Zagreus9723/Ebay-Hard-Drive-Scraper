@@ -64,7 +64,7 @@ def parse_search(response: httpx.Response) -> List[dict]:
             photo = css(".s-item__image img::attr(src)")
 
             size = parse_disk_size(title)
-            price_per_tb = round(price + shipping / size, 2) if size > 0 else 0.0
+            price_per_tb = round((price + shipping) / size, 2) if size > 0 else 0.0
 
             interface = "Unknown"
             if "sas" in title.lower():
