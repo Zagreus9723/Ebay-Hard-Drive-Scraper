@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-28 19:49-0600\n"
+"PO-Revision-Date: 2025-01-28 19:55-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
+
+#: .\templates\computer_parts\english.html:28
+#: .\templates\computer_parts\english.html:35
+#: .\templates\computer_parts\english.html:43
+msgid "description"
+msgstr "Find the best deals on hard drives on eBay with our detailed price comparison and filtering features."
+
+#: .\templates\computer_parts\english.html:29
+msgid "keywords"
+msgstr "ebay hdd, ebay hard drives, hard drives, disk prices, price comparison, hard drive deals, HDD prices, filter hard drives"
+
+#: .\templates\computer_parts\english.html:102
+msgid "Photo"
+msgstr "Photo"
+
+#: .\templates\computer_parts\english.html:103
+msgid "Item Photo"
+msgstr "Item Photo"
+
+#: .\templates\computer_parts\english.html:104
+msgid "Title"
+msgstr "Title"
+
+#: .\templates\computer_parts\english.html:105
+msgid "Price"
+msgstr "Price"
+
+#: .\templates\computer_parts\english.html:106
+#: .\templates\computer_parts\english.html:221
+msgid "Shipping"
+msgstr "Shipping"
+
+#: .\templates\computer_parts\english.html:107
+msgid "Size"
+msgstr "Size"
+
+#: .\templates\computer_parts\english.html:108
+msgid "Price Per"
+msgstr "Price Per"
+
+#: .\templates\computer_parts\english.html:109
+#: .\templates\computer_parts\english.html:213
+msgid "Physical Size"
+msgstr "Physical Size"
+
+#: .\templates\computer_parts\english.html:110
+msgid "Drive Interface"
+msgstr "Drive Interface"
+
+#: .\templates\computer_parts\english.html:111
+#: .\templates\computer_parts\english.html:192
+msgid "Condition"
+msgstr "Condition"
+
+#: .\templates\computer_parts\english.html:171
+msgid "Close Filters"
+msgstr "Close Filters"
+
+#: .\templates\computer_parts\english.html:173
+msgid "Filters"
+msgstr "Filters"
+
+#: .\templates\computer_parts\english.html:177
+msgid "Price Range"
+msgstr "Price Range"
+
+#: .\templates\computer_parts\english.html:185
+msgid "Size Range"
+msgstr "Size Range"
+
+#: .\templates\computer_parts\english.html:194
+msgid "Brand New"
+msgstr "Brand New"
+
+#: .\templates\computer_parts\english.html:195
+msgid "New (Other)"
+msgstr "New (Other)"
+
+#: .\templates\computer_parts\english.html:197
+msgid "Certified Refurbished"
+msgstr "Certified Refurbished"
+
+#: .\templates\computer_parts\english.html:198
+msgid "Excellent Refurbished"
+msgstr "Excellent Refurbished"
+
+#: .\templates\computer_parts\english.html:199
+msgid "Good Refurbished"
+msgstr "Good Refurbished"
+
+#: .\templates\computer_parts\english.html:200
+msgid "Pre-Owned"
+msgstr "Pre-Owned"
+
+#: .\templates\computer_parts\english.html:201
+msgid "Parts Only"
+msgstr "Parts Only"
+
+#: .\templates\computer_parts\english.html:205
+msgid "Interface"
+msgstr "Interface"
+
+#: .\templates\computer_parts\english.html:209
+#: .\templates\computer_parts\english.html:217
+msgid "Unknown"
+msgstr "Unknown"
+
+#: .\templates\computer_parts\english.html:223
+msgid "Free shipping only"
+msgstr "Free shipping only"
+
+#: .\templates\computer_parts\english.html:228
+msgid "Apply Filters"
+msgstr "Apply Filters"

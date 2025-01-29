@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     {% load static %}
+    {% load i18n %}
+    <script src="{% url 'djangojs' %}"></script>
     <!--
     Bootstrap is used under the MIT License.
     Copyright (c) 2011-2023 Twitter, Inc.
@@ -23,24 +25,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
 
     <!-- Meta Information -->
-    <meta name="description" content="Find the best deals on hard drives on eBay with our detailed price comparison and filtering features. Sort by price, size, condition, and more.">
-    <meta name="keywords" content="ebay hdd, ebay hard drives, hard drives, disk prices, price comparison, hard drive deals, HDD prices, filter hard drives">
-    <meta name="author" content="EBay Drives">
+    <meta name="description" content='{% trans "description" %}'>
+    <meta name="keywords" content='{% trans "keywords" %}'>
+    <meta name="author" content="DiscountDiskz">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Disk Prices - Compare Hard Drive Deals">
-    <meta property="og:description" content="Quickly find the best hard drive deals with price per TB on eBay.">
+    <meta property="og:title" content="DiscountDiskz">
+    <meta property="og:description" content='{% trans "description" %}'>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://discountdiskz.com">
     <meta property="og:image" content="https://discountdiskz/favicon.jpg">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Disk Prices - Compare Hard Drive Deals">
-    <meta name="twitter:description" content="Find affordable hard drives on eBay with detailed price comparisons and filters.">
+    <meta name="twitter:title" content="DiscountDiskz">
+    <meta name="twitter:description" content='{% trans "description" %}'>
 
-    <title>EBay Disk Prices</title>
+    <title>DiscountDiskz</title>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -96,6 +98,18 @@
         }
     }
     </style>
+    <script>
+        let photo = "{% trans 'Photo' %}";
+        let itemPhoto = "{% trans 'Item Photo' %}";
+        let title = "{% trans 'Title' %}";
+        let price = "{% trans 'Price' %}";
+        let shipping = "{% trans 'Shipping' %}";
+        let size = "{% trans 'Size' %}";
+        let pricePer = "{% trans 'Price Per' %}";
+        let physicalSize = "{% trans 'Physical Size' %}";
+        let driveInterface = "{% trans 'Drive Interface' %}";
+        let condition = "{% trans 'Condition' %}";
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -103,7 +117,7 @@
         <!-- Dropdown -->
         <div class="dropdown">
             <button class="btn btn-light dropdown-toggle" type="button" id="localizationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Localizations
+                Sites (Coming soon)
             </button>
             <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
                 {% for loc in localizations %}
@@ -154,13 +168,13 @@
         <!-- Aside (Filters) -->
         <aside id="filter-menu" class="d-none col-lg-2 col-12 d-lg-flex flex-column align-items-center top-0 bg-light p-3 overflow-auto vh-100">
                     <button class="btn btn-primary d-lg-none" id="detoggle-menu">
-            Close Filters
+            {% trans "Close Filters" %}
         </button>
-            <h3 class="text-center mb-4">Advanced Filters</h3>
+            <h3 class="text-center mb-4">{% trans "Filters" %}</h3>
 
             <!-- Price Range -->
             <div class="mb-4 w-100">
-                <label for="min-price" class="form-label">Price Range (USD):</label>
+                <label for="min-price" class="form-label">{% trans "Price Range" %}:</label>
                 <span id="price-range">$0 - $5000</span>
                 <input type="range" id="min-price" class="form-range" min="0" max="1000" step="25" value="0">
                 <input type="range" id="max-price" class="form-range" min="0" max="1000" step="25" value="1000">
@@ -168,50 +182,50 @@
 
             <!-- Size Range -->
             <div class="mb-4 w-100">
-                <label for="min-size" class="form-label">Size Range (TB):</label>
+                <label for="min-size" class="form-label">{% trans "Size Range" %} (TB):</label>
                 <span id="size-range">0 TB - 32 TB</span>
                 <input type="range" id="min-size" class="form-range" min="0" max="32" step="1" value="0">
                 <input type="range" id="max-size" class="form-range" min="0" max="32" step="1" value="32">
             </div>
 
             <!-- Condition Filters -->
-            <h4 class="mb-2">Condition</h4>
+            <h4 class="mb-2">{% trans "Condition" %}</h4>
             <div id="condition-filter" class="mb-4 w-100">
-                <label><input type="checkbox" value="Brand New"> Brand New</label><br>
-                <label><input type="checkbox" value="New (Other)"> New (Other)</label><br>
+                <label><input type="checkbox" value="Brand New"> {% trans "Brand New" %}</label><br>
+                <label><input type="checkbox" value="New (Other)"> {% trans "New (Other)" %}</label><br>
                 <label><input type="checkbox" value="Open Box"> Open Box</label><br>
-                <label><input type="checkbox" value="Certified - Refurbished"> Certified Refurbished</label><br>
-                <label><input type="checkbox" value="Excellent - Refurbished"> Excellent Refurbished</label><br>
-                <label><input type="checkbox" value="Good - Refurbished"> Good Refurbished</label><br>
-                <label><input type="checkbox" value="Pre-Owned"> Pre-Owned</label><br>
-                <label><input type="checkbox" value="Parts Only"> Parts Only</label>
+                <label><input type="checkbox" value="Certified - Refurbished"> {% trans "Certified Refurbished" %}</label><br>
+                <label><input type="checkbox" value="Excellent - Refurbished"> {% trans "Excellent Refurbished" %}</label><br>
+                <label><input type="checkbox" value="Good - Refurbished"> {% trans "Good Refurbished" %}</label><br>
+                <label><input type="checkbox" value="Pre-Owned"> {% trans "Pre-Owned" %}</label><br>
+                <label><input type="checkbox" value="Parts Only"> {% trans "Parts Only" %}</label>
             </div>
 
             <!-- Interface Filters -->
-            <h4 class="mb-2">Interface</h4>
+            <h4 class="mb-2">{% trans "Interface" %}</h4>
             <div id="interface-filter" class="mb-4 w-100">
                 <label><input type="checkbox" value="SATA"> SATA</label><br>
                 <label><input type="checkbox" value="SAS"> SAS</label><br>
-                <label><input type="checkbox" value="Unknown"> Unknown</label>
+                <label><input type="checkbox" value="Unknown"> {% trans "Unknown" %}</label>
             </div>
 
             <!-- Physical Size Filters -->
-            <h4 class="mb-2">Physical Size</h4>
+            <h4 class="mb-2">{% trans "Physical Size" %}</h4>
             <div id="physical-size-filter" class="mb-4 w-100">
                 <label><input type="checkbox" value='2.5"'> 2.5"</label><br>
                 <label><input type="checkbox" value='3.5"'> 3.5"</label><br>
-                <label><input type="checkbox" value="Unknown"> Unknown</label>
+                <label><input type="checkbox" value="Unknown"> {% trans "Unknown" %}</label>
             </div>
 
             <!-- Shipping Filters -->
-            <h4 class="mb-2">Shipping</h4>
+            <h4 class="mb-2">{% trans "Shipping" %}</h4>
             <div id="shipping-filter" class="mb-4 w-100">
-                <label><input type="checkbox" value="Free"> Free Shipping Only</label>
+                <label><input type="checkbox" value="Free"> {% trans "Free shipping only" %}</label>
             </div>
 
             <!-- Apply Filters Button -->
             <div id="filter-apply" class="mb-4 w-100">
-            <button id="apply-filters" class="btn btn-primary mt-auto">Apply Filters</button>
+            <button id="apply-filters" class="btn btn-primary mt-auto">{% trans "Apply Filters" %}</button>
             </div>
                        <div id="spacing" class="mb-4 w-100"></div>
         </aside>

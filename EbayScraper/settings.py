@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+from django.utils.translation import gettext_lazy as _
 import os
 
 load_dotenv(find_dotenv())
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'EbayScraper.urls'
@@ -114,8 +116,25 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+LANGUAGES = [
+    ('en', 'English'),           # United States, Canada (English), Australia, Ireland, etc.
+    ('fr', 'French'),            # Canada (French), France, Belgium (French), Switzerland (French)
+    ('de', 'German'),            # Germany, Austria, Switzerland (German)
+    ('it', 'Italian'),           # Italy
+    ('es', 'Spanish'),           # Spain, Argentina, Colombia, etc.
+    ('nl', 'Dutch'),             # Netherlands, Belgium (Dutch)
+    ('pl', 'Polish'),            # Poland
+    ('pt', 'Portuguese'),        # Portugal, Brazil
+    ('ru', 'Russian'),           # Belarus, Kazakhstan
+    ('zh-hans', 'Simplified Chinese'),  # China, Hong Kong
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',  # Ensure you create this directory
+]
 
 
 # Static files (CSS, JavaScript, Images)

@@ -71,48 +71,48 @@ var $table = $('#table')
             columns: [
                 {
                     field: 'photo',
-                    title: 'Photo',
-                    formatter: (value) => `<img src="${value}" alt="Item Photo" style="width: 50px; height: auto;">`
+                    title: photo,
+                    formatter: (value) => `<img src="${value}" alt="${itemPhoto}" style="width: 50px; height: auto;">`
                 },
                 {
                     field: 'title',
-                    title: 'Title',
+                    title: title,
                     formatter: (value, row) => `<a href="${row.url}?mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=${window.location.hostname}&campid=5339096616&toolid=20001&mkevt=1" target="_blank">${value}</a>`,
                     escape: true // Allow HTML content for links
                 },
                 {
                     field: 'price',
-                    title: 'Price',
+                    title: price,
                     formatter: (value, row) => `${row.currency}${value}`,
                     sortable: true
                 },
                 {
                     field: 'shipping',
-                    title: 'Shipping',
+                    title: shipping,
                     formatter: (value, row) => `${row.currency}${value}`
                 },
                 {
                     field: 'size',
-                    title: 'Size (TB)',
+                    title: size + ' (TB)',
                     sortable: true
                 },
                 {
                     field: 'price_per_tb',
-                    title: 'Price Per TB',
+                    title: pricePer + 'TB',
                     formatter: (value, row) => `${row.currency}${value}`,
                     sortable: true
                 },
                 {
                     field: 'physicalSize',
-                    title: 'Physical Size'
+                    title: physicalSize
                 },
                 {
                     field: 'interface',
-                    title: 'Interface'
+                    title: driveInterface
                 },
                 {
                     field: 'condition',
-                    title: 'Condition'
+                    title: condition
                 },
             ]
         });
