@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.translation import activate
 
 # Create your views here.
 def homepage(request):
@@ -44,4 +45,5 @@ def hard_drives(request):
         {"name": "Honduras", "href": "/honduras", "flag": "https://flagcdn.com/hn.svg"},
         {"name": "Uruguay", "href": "/uruguay", "flag": "https://flagcdn.com/uy.svg"}
     ]
+    activate('en')
     return render(request, 'computer_parts/english.html',{"localizations": localizations})
