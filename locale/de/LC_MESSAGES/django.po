@@ -6,128 +6,129 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-28 19:49-0600\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2025-01-28 20:06-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #: .\templates\computer_parts\english.html:28
 #: .\templates\computer_parts\english.html:35
 #: .\templates\computer_parts\english.html:43
 msgid "description"
-msgstr ""
+msgstr "Finden Sie mit unseren detaillierten Preisvergleichs- und Filterfunktionen die besten Angebote für Festplatten auf eBay."
 
 #: .\templates\computer_parts\english.html:29
 msgid "keywords"
-msgstr ""
+msgstr "ebay hdd, ebay festplatten, festplatten, disk preise, preisvergleich, festplatten angebote, hdd preise, festplatten filtern"
 
 #: .\templates\computer_parts\english.html:102
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
 #: .\templates\computer_parts\english.html:103
 msgid "Item Photo"
-msgstr ""
+msgstr "Fotos des Gerichts"
 
 #: .\templates\computer_parts\english.html:104
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: .\templates\computer_parts\english.html:105
 msgid "Price"
-msgstr ""
+msgstr "Preis"
 
 #: .\templates\computer_parts\english.html:106
 #: .\templates\computer_parts\english.html:221
 msgid "Shipping"
-msgstr ""
+msgstr "Versand"
 
 #: .\templates\computer_parts\english.html:107
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 #: .\templates\computer_parts\english.html:108
 msgid "Price Per"
-msgstr ""
+msgstr "Preis pro"
 
 #: .\templates\computer_parts\english.html:109
 #: .\templates\computer_parts\english.html:213
 msgid "Physical Size"
-msgstr ""
+msgstr "Körperliche Größe"
 
 #: .\templates\computer_parts\english.html:110
 msgid "Drive Interface"
-msgstr ""
+msgstr "Antriebsschnittstelle"
 
 #: .\templates\computer_parts\english.html:111
 #: .\templates\computer_parts\english.html:192
 msgid "Condition"
-msgstr ""
+msgstr "Zustand"
 
 #: .\templates\computer_parts\english.html:171
 msgid "Close Filters"
-msgstr ""
+msgstr "Filter schließen"
 
 #: .\templates\computer_parts\english.html:173
 msgid "Filters"
-msgstr ""
+msgstr "Filter"
 
 #: .\templates\computer_parts\english.html:177
 msgid "Price Range"
-msgstr ""
+msgstr "Preisklasse"
 
 #: .\templates\computer_parts\english.html:185
 msgid "Size Range"
-msgstr ""
+msgstr "Größenbereich"
 
 #: .\templates\computer_parts\english.html:194
 msgid "Brand New"
-msgstr ""
+msgstr "Brandneu"
 
 #: .\templates\computer_parts\english.html:195
 msgid "New (Other)"
-msgstr ""
+msgstr "Neu (Andere)"
 
 #: .\templates\computer_parts\english.html:197
 msgid "Certified Refurbished"
-msgstr ""
+msgstr "Zertifiziert generalüberholt"
 
 #: .\templates\computer_parts\english.html:198
 msgid "Excellent Refurbished"
-msgstr ""
+msgstr "Ausgezeichnete Renoviert"
 
 #: .\templates\computer_parts\english.html:199
 msgid "Good Refurbished"
-msgstr ""
+msgstr "Gut Überholt"
 
 #: .\templates\computer_parts\english.html:200
 msgid "Pre-Owned"
-msgstr ""
+msgstr "Gebraucht"
 
 #: .\templates\computer_parts\english.html:201
 msgid "Parts Only"
-msgstr ""
+msgstr "Nur Teile"
 
 #: .\templates\computer_parts\english.html:205
 msgid "Interface"
-msgstr ""
+msgstr "Schnittstelle"
 
 #: .\templates\computer_parts\english.html:209
 #: .\templates\computer_parts\english.html:217
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #: .\templates\computer_parts\english.html:223
 msgid "Free shipping only"
-msgstr ""
+msgstr "Nur kostenloser Versand"
 
 #: .\templates\computer_parts\english.html:228
 msgid "Apply Filters"
-msgstr ""
+msgstr "Filter anwenden"

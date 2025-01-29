@@ -6,129 +6,134 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-28 19:49-0600\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2025-01-28 20:13-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #: .\templates\computer_parts\english.html:28
 #: .\templates\computer_parts\english.html:35
 #: .\templates\computer_parts\english.html:43
 msgid "description"
 msgstr ""
+"Encuentre las mejores ofertas en discos duros en eBay con nuestras "
+"funciones detalladas de comparación de precios y filtrado."
 
 #: .\templates\computer_parts\english.html:29
 msgid "keywords"
 msgstr ""
+"disco duro de eBay, discos duros de eBay, discos duros, precios de discos, "
+"comparación de precios, ofertas de discos duros, precios de HDD, filtrar "
+"discos duros"
 
 #: .\templates\computer_parts\english.html:102
 msgid "Photo"
-msgstr ""
+msgstr "Foto"
 
 #: .\templates\computer_parts\english.html:103
 msgid "Item Photo"
-msgstr ""
+msgstr "Foto del artículo"
 
 #: .\templates\computer_parts\english.html:104
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: .\templates\computer_parts\english.html:105
 msgid "Price"
-msgstr ""
+msgstr "Precio"
 
 #: .\templates\computer_parts\english.html:106
 #: .\templates\computer_parts\english.html:221
 msgid "Shipping"
-msgstr ""
+msgstr "Envío"
 
 #: .\templates\computer_parts\english.html:107
 msgid "Size"
-msgstr ""
+msgstr "Tamaño"
 
 #: .\templates\computer_parts\english.html:108
 msgid "Price Per"
-msgstr ""
+msgstr "Precio por"
 
 #: .\templates\computer_parts\english.html:109
 #: .\templates\computer_parts\english.html:213
 msgid "Physical Size"
-msgstr ""
+msgstr "Tamaño físico"
 
 #: .\templates\computer_parts\english.html:110
 msgid "Drive Interface"
-msgstr ""
+msgstr "Interfaz de unidad"
 
 #: .\templates\computer_parts\english.html:111
 #: .\templates\computer_parts\english.html:192
 msgid "Condition"
-msgstr ""
+msgstr "Condición"
 
 #: .\templates\computer_parts\english.html:171
 msgid "Close Filters"
-msgstr ""
+msgstr "Cerrar filtros"
 
 #: .\templates\computer_parts\english.html:173
 msgid "Filters"
-msgstr ""
+msgstr "Filtros"
 
 #: .\templates\computer_parts\english.html:177
 msgid "Price Range"
-msgstr ""
+msgstr "Gama de precios"
 
 #: .\templates\computer_parts\english.html:185
 msgid "Size Range"
-msgstr ""
+msgstr "Rango de tamaño"
 
 #: .\templates\computer_parts\english.html:194
 msgid "Brand New"
-msgstr ""
+msgstr "Para estrenar"
 
 #: .\templates\computer_parts\english.html:195
 msgid "New (Other)"
-msgstr ""
+msgstr "Nuevo (Otro)"
 
 #: .\templates\computer_parts\english.html:197
 msgid "Certified Refurbished"
-msgstr ""
+msgstr "Certificado reformado"
 
 #: .\templates\computer_parts\english.html:198
 msgid "Excellent Refurbished"
-msgstr ""
+msgstr "Excelente reformado"
 
 #: .\templates\computer_parts\english.html:199
 msgid "Good Refurbished"
-msgstr ""
+msgstr "Bueno reformado"
 
 #: .\templates\computer_parts\english.html:200
 msgid "Pre-Owned"
-msgstr ""
+msgstr "Usado"
 
 #: .\templates\computer_parts\english.html:201
 msgid "Parts Only"
-msgstr ""
+msgstr "Sólo piezas"
 
 #: .\templates\computer_parts\english.html:205
 msgid "Interface"
-msgstr ""
+msgstr "Interfaz"
 
 #: .\templates\computer_parts\english.html:209
 #: .\templates\computer_parts\english.html:217
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #: .\templates\computer_parts\english.html:223
 msgid "Free shipping only"
-msgstr ""
+msgstr "Envío gratuito únicamente"
 
 #: .\templates\computer_parts\english.html:228
 msgid "Apply Filters"
-msgstr ""
+msgstr "Aplicar filtros"
