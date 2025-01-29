@@ -98,7 +98,7 @@ var $table = $('#table')
                 },
                 {
                     field: 'price_per_tb',
-                    title: pricePer + 'TB',
+                    title: pricePer + ' TB',
                     formatter: (value, row) => `${row.currency}${value}`,
                     sortable: true
                 },
