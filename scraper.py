@@ -143,7 +143,7 @@ async def scrape_all_sites(json_file: str):
             country = "United States"
             print(f"Scraping {country} ({site['url']}) with term '{site['local_term']}'...")
             time.sleep(1)
-            results = await scrape_site(url="https://ebay.com", term=site["local_term"])
+            results = await scrape_site(url="https://ebay.com", term="hard drive")
 
             # Save results to a separate file for each country
             output_file = f"static/json_data/{country}.json"
