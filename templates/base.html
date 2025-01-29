@@ -52,60 +52,70 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
 
     <!-- Custom Styles -->
-    <style>
-        aside {
-            background-color: lightgray;
-            height: 100vh; /* Full viewport height */
-        }
-
-        header {
-            background-color: lightblue;
-        }
-
-        table {
-            height: 90%;
-        }
-
-        html, body {
-            overflow: hidden;
-            height: 100vh;
-        }
-
-        /* Mobile-specific styles */
-         @media (max-width: 768px) {
-        aside {
-            height: 100vh; /* Full screen height */
-            width: 100%; /* Full screen width */
-            position: fixed;
-            top: 0;
-            left: -100%; /* Hidden by default */
-            z-index: 1050; /* Ensure it appears above other elements */
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
-            transition: left 0.3s ease;
-            overflow: auto ;
-        }
-
-        aside.active {
-            left: 0; /* Slide into view when active */
-        }
-
-        #toggle-menu {
-            display: block;
-        }
-
-        #filter-menu h3 {
-            margin-top: 20px;
-        }
-    }
-    </style>
-    {% block script%}
+{% block custom-style %}
+{% endblock %}
+    {% block script %}
     {% endblock %}
 </head>
 <body>
-{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="localizationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Sites (Coming soon)
+            </button>
+            <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
+                {% for loc in localizations %}
+                    <li>
+                        <a class="dropdown-item {% if loc.name != 'United States' %}disabled{% endif %}" href="{{ loc.href }}">
+                            <img src="{{ loc.flag }}" alt="{{ loc.name }} flag" style="max-width: 20px; margin-right: 8px;">
+                            {{ loc.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Toggle button for mobile -->
+        <button class="btn btn-primary d-lg-none" id="toggle-menu">
+            Filters
+        </button>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+{% block main-content %}
 {% endblock %}
+
+        <!-- Aside (Filters) -->
+        <aside id="filter-menu" class="d-none col-lg-2 col-12 d-lg-flex flex-column align-items-center top-0 bg-light p-3 overflow-auto vh-90">
+                    {% block aside-content %}
+                            <button class="btn btn-primary d-lg-none" id="detoggle-menu">
+            {% trans "Close Filters" %}
+        </button>
+            {% endblock %}
+        </aside>
+    </div>
+<div class="row">
 <div class="sticky-bottom d-flex justify-content-center col-lg-10 col-12">
-    I am required to disclose that if you purchase from a link on this site, eBay will pay me a small cut at no cost to you.  I can be contacted at mailto:discountdiskz@outlook.com.
+        I am required to disclose that if you purchase from a link on this site, eBay will pay me a small cut at no cost to you.  I can be contacted at mailto:discountdiskz@outlook.com.
 </div>
+</div>
+</div>
+
+{% block scripts %}
+        <script>
+    $(document).ready(() => {
+        // Mobile menu toggle
+        $('#toggle-menu').click(() => {
+            $('#filter-menu').toggleClass('active d-none');
+        });
+        $('#detoggle-menu').click(() => {
+            $('#filter-menu').toggleClass('active d-none');
+        });
+    });
+</script>
+{% endblock %}
 </body>
 </html>

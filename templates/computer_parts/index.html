@@ -1,6 +1,57 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
+{% block custom-style %}
+    <style>
+        aside {
+            background-color: lightgray;
+            height: 90vh; /* Full viewport height */
+        }
+
+        header {
+            background-color: lightblue;
+        }
+
+        table {
+            height: 90%;
+        }
+
+        html, body {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Mobile-specific styles */
+         @media (max-width: 992px) {
+        aside {
+            height: 100vh; /* Full screen height */
+            width: 100%; /* Full screen width */
+            position: fixed;
+            top: 0;
+            left: -100%; /* Hidden by default */
+            z-index: 1050; /* Ensure it appears above other elements */
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            transition: left 0.3s ease;
+            overflow: auto ;
+        }
+
+        aside.active {
+            left: 0; /* Slide into view when active */
+        }
+
+        #toggle-menu {
+            display: block;
+        }
+
+        #filter-menu h3 {
+            margin-top: 20px;
+        }
+        html, body {
+            overflow: auto;
+        }
+    }
+    </style>
+{% endblock %}
 {% block script %}
     <script>
         let photo = "{% trans 'Photo' %}";
@@ -15,35 +66,8 @@
         let condition = "{% trans 'Condition' %}";
     </script>
 {% endblock %}
-{% block content %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <!-- Dropdown -->
-        <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="localizationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Sites (Coming soon)
-            </button>
-            <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
-                {% for loc in localizations %}
-                    <li>
-                        <a class="dropdown-item {% if loc.name != 'United States' %}disabled{% endif %}" href="{{ loc.href }}">
-                            <img src="{{ loc.flag }}" alt="{{ loc.name }} flag" style="max-width: 20px; margin-right: 8px;">
-                            {{ loc.name }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <!-- Toggle button for mobile -->
-        <button class="btn btn-primary d-lg-none" id="toggle-menu">
-            Filters
-        </button>
-    </div>
-</nav>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Main Content -->
+{% block main-content %}
+            <!-- Main Content -->
         <main class="col-lg-10 col-12">
             <table
                 id="table"
@@ -65,13 +89,13 @@
                 data-side-pagination="local"
                 data-url="{% static 'json_data/United States.json' %}"
                 data-response-handler="responseHandler"
-                data-height="auto">
+                data-height="auto"
+            data-width="auto">
             </table>
         </main>
-
-        <!-- Aside (Filters) -->
-        <aside id="filter-menu" class="d-none col-lg-2 col-12 d-lg-flex flex-column align-items-center top-0 bg-light p-3 overflow-auto vh-100">
-                    <button class="btn btn-primary d-lg-none" id="detoggle-menu">
+{% endblock %}
+{% block aside-content %}
+    <button class="btn btn-primary d-lg-none" id="detoggle-menu">
             {% trans "Close Filters" %}
         </button>
             <h3 class="text-center mb-4">{% trans "Filters" %}</h3>
@@ -132,11 +156,10 @@
             <button id="apply-filters" class="btn btn-primary mt-auto">{% trans "Apply Filters" %}</button>
             </div>
                        <div id="spacing" class="mb-4 w-100"></div>
-        </aside>
-    </div>
-</div>
+{% endblock %}
 
-<script>
+{% block scripts %}
+    <script>
     $(document).ready(() => {
         // Initialize the table
         initTable();
