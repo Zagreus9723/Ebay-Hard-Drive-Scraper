@@ -140,10 +140,10 @@ async def scrape_all_sites(json_file: str):
         sites = json.load(f)["sites"]
     while True:
         for site in sites:
-            country = site["country"]
+            country = "United States"
             print(f"Scraping {country} ({site['url']}) with term '{site['local_term']}'...")
             time.sleep(1)
-            results = await scrape_site(url=site["url"], term=site["local_term"])
+            results = await scrape_site(url="https://ebay.com", term=site["local_term"])
 
             # Save results to a separate file for each country
             output_file = f"static/json_data/{country}.json"
@@ -151,6 +151,7 @@ async def scrape_all_sites(json_file: str):
                 json.dump(results, f, indent=4)
 
             print(f"Saved {len(results)} results to {output_file}.")
+            time.sleep(900)
 
 # Run the scraper
 if __name__ == "__main__":
