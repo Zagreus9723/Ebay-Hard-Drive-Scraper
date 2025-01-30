@@ -131,6 +131,7 @@ async def scrape_site(url: str, term: str, max_pages=25) -> List[dict]:
                 print(f"Error fetching results from {url} page {page}: {e}")
             finally:
                 progress_bar.update(1)  # Increment the progress bar
+            time.sleep(2)
     time.sleep(1)
     return results
 
